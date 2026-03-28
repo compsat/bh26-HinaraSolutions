@@ -159,8 +159,8 @@ export function DashboardScreen() {
             <div className="bg-surface-container-low rounded-3xl p-8 flex items-center gap-6 relative transition-all duration-300 hover:scale-[1.01] border border-outline-variant/5">
               <div className="w-32 h-32 flex-shrink-0 bg-white rounded-full p-2 shadow-inner">
                 <img 
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHqNSYjIbV_8BYFNjfANTV6F-D6jAZD0omj5B_O-W96RIsKYi5wrPe4iHMw-a7YdD81TYkDOxI4FnF1cVSPZYqMtQhpXbTcw6mppw7anqs5ZPA4AqUEohvQfNUAx8o7_NdX98wsrOzvTY9wEhy1HISCtSOJfLYX2Vnb45pZ-pPS_tilWCqsxSwD_Dy-5kg2rBzCImqJ7nGBb0yqOLopmYE637yiyfjPACG39sxF6rHGsl4EC7yZ9quzucfcInA15o3IDUh9wu8nQ" 
-                  alt="Wattzy Mascot" 
+                  src="/zapperBird.png" 
+                  alt="Zapper Bird" 
                   className="w-full h-full object-contain"
                   referrerPolicy="no-referrer"
                 />

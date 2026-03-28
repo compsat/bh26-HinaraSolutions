@@ -53,7 +53,7 @@ export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
             <Zap className="text-primary w-6 h-6 fill-primary" />
           </div>
           <div>
-            <h1 className="text-lg font-black text-primary font-headline tracking-tight">WattZup</h1>
+            <h1 className="text-lg font-black text-primary font-headline tracking-tight">WattZap</h1>
             <p className="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Energy Intelligence</p>
           </div>
         </div>

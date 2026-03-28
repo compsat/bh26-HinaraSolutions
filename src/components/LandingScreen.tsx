@@ -19,7 +19,6 @@ export function LandingScreen({ onGetStarted }: LandingScreenProps) {
         </div>
         <div className="hidden md:flex items-center gap-8">
           <a href="#features" className="text-sm font-bold text-on-surface-variant hover:text-primary transition-colors">Features</a>
-          <a href="#impact" className="text-sm font-bold text-on-surface-variant hover:text-primary transition-colors">Impact</a>
           <a href="#community" className="text-sm font-bold text-on-surface-variant hover:text-primary transition-colors">Community</a>
         </div>
         <button 

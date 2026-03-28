@@ -115,7 +115,7 @@ export function AIInsightsScreen() {
       <section className="flex flex-col md:flex-row items-end gap-8 relative pb-4">
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="w-64 h-64 flex-shrink-0 relative">
           <div className="absolute inset-0 bg-primary-container/10 rounded-full blur-3xl"></div>
-          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCldmSsscTcoi2WHlbZ-4X1weOZDipEjjL2IwmUS2zitTBRKIP7gOrj7xEgbAH87-FXC4eACnIIfcDUhRDj6My0mQ0_tCckAqAJ28AWykFmA-lgQ2qZZ1q7K3RreF6xwx1fXuhA1_cOGZo4xJEtvYziFdQJ8BHuz4k7dBQaw-g1IoFqYHYm_cESIZo62g-gKG7ZD7yAvi2F9Ry-jJ8d6MNIR837k_MPNVivVAHzLWWoaSY83rT7bEPf65y3XB_pEhzLY8XmU8zr6A"
+          <img src="/zapperBird.png"
             alt="Tarsier Mascot" className="w-full h-full object-contain relative z-10" referrerPolicy="no-referrer" />
         </motion.div>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="flex-grow pb-8">
@@ -131,9 +131,6 @@ export function AIInsightsScreen() {
             </p>
           </div>
         </motion.div>
-        <div className="absolute -top-6 right-0 text-right opacity-10 select-none pointer-events-none">
-          <span className="text-8xl font-black font-headline tracking-tighter">INSIGHT</span>
-        </div>
       </section>
 
       {/* Main Data Grid */}

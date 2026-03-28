@@ -70,11 +70,9 @@ export function CommunityScreen() {
           <div className="absolute right-0 bottom-0 top-0 w-1/3 hidden md:flex items-center justify-center bg-gradient-to-l from-primary-container/20 to-transparent">
             <div className="relative">
               <div className="w-48 h-48 bg-primary-container rounded-full blur-3xl opacity-30 absolute -z-10 animate-pulse"></div>
-              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqiJ9OhxLmlHxy1xJuJJqCW0NdLA7fOWBKrHU3MQpcc4rLo7A8MQnM1CYW8sE9lt6tAAfxBWtJ0dNt0USQTdqom20_imbLtbtFvTQMfUiU2yMX9VEPtkjDDne1tY8KHUk2nk0vN5oI6ZZMm1PtCTgLql3QQoue1MbqwcQxf61Mh0rk96WWliXxKGJM5BBUS83FmUqubPxIUqSSUIEzVgWB8oy8Lb7s-POzc2CxCqRHe3WLKr3ObfZ12tWGJP2oeINMAB_ewPrC_A"
-                alt="Tarsier mascot" className="w-32 h-32 object-contain drop-shadow-xl" referrerPolicy="no-referrer" />
-              <div className="absolute -top-4 -right-4 bg-white/70 backdrop-blur-md p-3 rounded-xl shadow-lg border border-white/50">
-                <Leaf className="text-green-600 w-6 h-6" />
-              </div>
+              <img src="/zapperBird.png"
+                alt="zapperBird mascot" className="w-60 h-60 object-contain drop-shadow-xl" referrerPolicy="no-referrer" />
+              
             </div>
           </div>
         </div>
@@ -95,7 +93,7 @@ export function CommunityScreen() {
               />
             )) : (
               <>
-                <ActivityItem name="WattZup" action="Welcome to the community!" time="Just now" seed="wattzup" />
+                <ActivityItem name="WattZap" action="Welcome to the community!" time="Just now" seed="wattzap" />
                 <ActivityItem name="System" action="Start logging usage to see activity here" time="Today" seed="system" />
               </>
             )}
