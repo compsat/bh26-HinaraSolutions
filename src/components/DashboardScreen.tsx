@@ -91,6 +91,10 @@ export function DashboardScreen() {
       ];
   const maxChartVal = Math.max(...chartData.map(d => d.value), 1);
 
+  // Dynamic Gauge Rotation Calculation
+  const clampedPercent = Math.min(Math.max(percentUsed, 0), 100);
+  const gaugeRotation = -135 + (clampedPercent / 100) * 180;
+
   if (loading) {
     return (
       <div className="p-8 flex items-center justify-center min-h-[60vh]">
@@ -119,8 +123,11 @@ export function DashboardScreen() {
                     budgetStatus === 'over' ? 'border-t-red-500 border-r-red-500' :
                     budgetStatus === 'warning' ? 'border-t-amber-500 border-r-amber-500' :
                     'border-t-primary border-r-primary'
-                  } rotate-[45deg]`}
-                  style={{ transition: 'transform 1s ease-out' }}
+                  }`}
+                  style={{ 
+                    transition: 'transform 1s ease-out',
+                    transform: `rotate(${gaugeRotation}deg)` 
+                  }}
                 ></div>
                 <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-center pb-2">
                   <p className="font-headline font-extrabold text-4xl text-on-surface">{formatPeso(burnRate)}</p>
