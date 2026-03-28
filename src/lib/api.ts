@@ -276,13 +276,20 @@ export async function getUserAchievements(userId: string): Promise<Achievement[]
 // COMMUNITY
 // ============================================================
 
-export async function getLeaderboard(limit: number = 10): Promise<LeaderboardEntry[]> {
-  const { data, error } = await supabase.rpc('get_leaderboard', { p_limit: limit });
+export async function getLeaderboard(limit: number = 10, location: string = '') {
+  // If they are "Metro Manila", we pass null to show everyone. Otherwise, filter by their city.
+  const filterLocation = location === 'Metro Manila' ? null : location;
+
+  const { data, error } = await supabase.rpc('get_leaderboard', {
+    p_limit: limit,
+    p_location: filterLocation
+  });
+
   if (error) {
-    console.error('getLeaderboard error:', error);
+    console.error('Error fetching leaderboard:', error);
     return [];
   }
-  return (data || []) as LeaderboardEntry[];
+  return data;
 }
 
 export async function getTeams(): Promise<CommunityTeam[]> {
@@ -321,17 +328,35 @@ export async function getUserTeams(userId: string): Promise<CommunityTeam[]> {
   return (data || []).map((tm: any) => tm.community_teams).filter(Boolean) as CommunityTeam[];
 }
 
-export async function getActiveChallenges(): Promise<Challenge[]> {
+export async function getActiveChallenges(location: string = '') {
   const { data, error } = await supabase
-    .from('challenges')
-    .select('*, team_a:community_teams!team_a_id(*), team_b:community_teams!team_b_id(*)')
-    .eq('is_active', true)
-    .order('created_at', { ascending: false });
+      .from('challenges')
+      .select(`
+      *,
+      team_a:team_a_id (id, name, region),
+      team_b:team_b_id (id, name, region)
+    `)
+      .eq('is_active', true);
+
   if (error) {
-    console.error('getActiveChallenges error:', error);
+    console.error('Error fetching challenges:', error);
     return [];
   }
-  return (data || []) as Challenge[];
+
+  // Hackathon Logic: Force the active challenge to be the one matching the user's city!
+  if (location && location !== 'Metro Manila') {
+    const teamName = `Team ${location}`; // e.g., "Team Cavite"
+
+    // Find a challenge where Team A or Team B is their team
+    const localChallenge = data.find(c =>
+        c.team_a?.name === teamName || c.team_b?.name === teamName
+    );
+
+    // Return their local duel if it exists, otherwise fallback to the default
+    return localChallenge ? [localChallenge] : data;
+  }
+
+  return data;
 }
 
 export async function getRecentActivity(): Promise<any[]> {
@@ -403,4 +428,25 @@ export async function getPrediction(userId: string): Promise<PredictionResult | 
     console.error('getPrediction error:', err);
     return null;
   }
+}
+
+export async function getChallengeStats(challengeId: string) {
+  const { data, error } = await supabase
+      .rpc('get_team_challenge_stats', { p_challenge_id: challengeId });
+
+  if (error) {
+    console.error('Error fetching challenge stats:', error);
+    return [];
+  }
+  return data;
+}
+
+// Fetch the average savings percentage ranked by region
+export async function getRegionalRankings() {
+  const { data, error } = await supabase.rpc('get_regional_rankings');
+  if (error) {
+    console.error('Error fetching regional rankings:', error);
+    return [];
+  }
+  return data;
 }
