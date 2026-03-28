@@ -147,7 +147,7 @@ export async function getCurrentRate(): Promise<number> {
     .order('effective_date', { ascending: false })
     .limit(1)
     .single();
-  if (error || !data) return DEFAULT_RATE_PER_KWH;
+  if (error || !data) return DEFAULT_RATE_PER_KWH; // 13.8161 March 2026
   return data.rate_per_kwh;
 }
 
@@ -195,7 +195,7 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
     budgetStatus: calculateBudgetStatus(projectedBill, budget),
     dailyAvgCost,
     daysLeft: getDaysRemainingInMonth(),
-    percentUsed: budget > 0 ? Math.round((projectedBill / budget) * 100) : 0,
+    percentUsed: budget > 0 ? Math.round((totalCost / budget) * 100) : 0,
     monthlyBudget: budget,
   };
 }
@@ -381,7 +381,7 @@ export async function chatWithAI(userId: string, message: string, history: ChatM
 
 export async function parseVoiceTranscript(userId: string, transcript: string): Promise<VoiceParseResult> {
   try {
-    const res = await fetch('http://localhost:3001/api/voice/parse', {
+    const res = await fetch('/api/voice/parse', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId, transcript }),
@@ -401,6 +401,66 @@ export async function getPrediction(userId: string): Promise<PredictionResult | 
     return await res.json();
   } catch (err) {
     console.error('getPrediction error:', err);
+    return null;
+  }
+}
+
+export async function getEnhancedInsights(userId: string): Promise<any> {
+  try {
+    const res = await fetch(`/api/ai/enhanced-insights?userId=${userId}`);
+    if (!res.ok) throw new Error('Failed to get enhanced insights');
+    return await res.json();
+  } catch (err) {
+    console.error('getEnhancedInsights error:', err);
+    return null;
+  }
+}
+
+// ============================================================
+// MERALCO BILL INPUT & ACCURACY
+// ============================================================
+
+export async function submitMeralcoBill(
+  userId: string,
+  billingMonth: string,
+  actualKwh: number,
+  actualAmount: number
+): Promise<any> {
+  try {
+    const res = await fetch('/api/ai/submit-bill', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId, billingMonth, actualKwh, actualAmount }),
+    });
+    if (!res.ok) throw new Error('Failed to submit bill');
+    return await res.json();
+  } catch (err) {
+    console.error('submitMeralcoBill error:', err);
+    return null;
+  }
+}
+
+export async function getBillHistory(userId: string): Promise<any[]> {
+  const { data, error } = await supabase
+    .from('meralco_bills')
+    .select('*')
+    .eq('user_id', userId)
+    .order('billing_month', { ascending: false })
+    .limit(12);
+  if (error) {
+    console.error('getBillHistory error:', error);
+    return [];
+  }
+  return data || [];
+}
+
+export async function getBillAccuracy(userId: string): Promise<any> {
+  try {
+    const res = await fetch(`/api/ai/bill-accuracy?userId=${userId}`);
+    if (!res.ok) throw new Error('Failed to get accuracy');
+    return await res.json();
+  } catch (err) {
+    console.error('getBillAccuracy error:', err);
     return null;
   }
 }
