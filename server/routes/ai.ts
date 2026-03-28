@@ -3,6 +3,7 @@ import { supabaseAdmin } from '../lib/supabase-admin';
 import * as gemini from '../lib/gemini';
 import { predictMonthlyBill } from '../lib/ml-predictor';
 import type { AuthRequest } from '../middleware/auth';
+import { ConsumptionEngine } from '../lib/consumptionEngine';
 
 const router = Router();
 
@@ -502,6 +503,56 @@ router.get('/bill-accuracy', async (req: AuthRequest, res) => {
     console.error('bill-accuracy error:', err);
     res.status(500).json({ error: err.message || 'Failed to get accuracy' });
   }
+});
+
+
+router.post('/submit-bill', async (req, res) => {
+  const { userId, billingMonth, actualKwh, actualAmount } = req.body;
+
+  try {
+    // 1. Get our system's estimate for that specific month
+    const estimate = await ConsumptionEngine.getEnhancedEstimate(userId);
+    const { data: rateData } = await supabaseAdmin.from('energy_rates').select('rate_per_kwh').order('effective_date', { ascending: false }).limit(1).single();
+    const rate = rateData?.rate_per_kwh || 12.0;
+
+    const ourEstimatedAmount = estimate.estimatedKwh * rate;
+    const diff = actualAmount - ourEstimatedAmount;
+    const accuracy = Math.max(0, 100 - Math.abs((diff / actualAmount) * 100));
+
+    // 2. Save to Calibration Table
+    const { data, error } = await supabaseAdmin.from('meralco_bills').upsert({
+      user_id: userId,
+      billing_month: billingMonth,
+      actual_kwh: actualKwh,
+      actual_amount: actualAmount,
+      our_estimated_amount: ourEstimatedAmount,
+      accuracy_percent: Math.round(accuracy),
+      amount_difference: Math.round(diff)
+    }).select().single();
+
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to calibrate bill' });
+  }
+});
+
+// GET /api/ai/enhanced-insights - For the UI Hero Section
+router.get('/enhanced-insights', async (req, res) => {
+  const userId = req.query.userId as string;
+  const estimate = await ConsumptionEngine.getEnhancedEstimate(userId);
+  const { data: rateData } = await supabaseAdmin.from('energy_rates').select('rate_per_kwh').order('effective_date', { ascending: false }).limit(1).single();
+  
+  const rate = rateData?.rate_per_kwh || 12.0;
+  
+  res.json({
+    monthlyEstimate: {
+      estimatedBill: estimate.estimatedKwh * rate,
+      estimatedKwh: estimate.estimatedKwh,
+      daysRemaining: estimate.daysRemaining,
+      dailyAvgKwh: estimate.dailyAvgKwh,
+      dailyAvgCost: estimate.dailyAvgKwh * rate
+    }
+  });
 });
 
 export default router;
