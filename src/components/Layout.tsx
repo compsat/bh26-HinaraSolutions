@@ -49,8 +49,8 @@ export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
     <>
       <aside className="h-screen w-64 fixed left-0 top-0 bg-surface-container-low flex flex-col p-6 gap-8 z-50 border-r border-outline-variant/20">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center">
-            <Zap className="text-primary w-6 h-6 fill-primary" />
+          <div className="w-15 h-15 rounded-xl bg-primary-container flex items-center justify-center">
+            <img src="/wattzap_logo.png" alt="WattZup" className="w-15 h-15 rounded-xl object-contain" />
           </div>
           <div>
             <h1 className="text-lg font-black text-primary font-headline tracking-tight">WattZap</h1>

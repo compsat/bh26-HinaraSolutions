@@ -109,7 +109,7 @@ export function LoginScreen({ onBack }: LoginScreenProps) {
         
         <div className="flex flex-col items-center mb-10">
           <div className="w-16 h-16 rounded-2xl bg-primary-container flex items-center justify-center mb-6 shadow-lg shadow-primary-container/20">
-            <Zap className="text-primary w-10 h-10 fill-primary" />
+            <img src="/wattzap_logo.png" alt="WattZup" className="w-15 h-15 rounded-xl object-contain" />
           </div>
           <h1 className="text-3xl font-black font-headline text-primary tracking-tight">WattZup</h1>
           <p className="text-sm text-on-surface-variant font-medium mt-2 text-center">
