@@ -112,7 +112,19 @@ export function SettingsScreen() {
                 <InputGroup label="Full Name" value={fullName} onChange={setFullName} />
                 <InputGroup label="Email Address" value={email} type="email" disabled />
                 <InputGroup label="Household Size" value={String(householdSize)} type="number" onChange={v => setHouseholdSize(Number(v))} />
-                <InputGroup label="Location" value={location} onChange={setLocation} />
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant px-1">Location (Team)</label>
+                  <select
+                      value={location}
+                      onChange={(e) => setLocation(e.target.value)}
+                      className="w-full bg-surface-container-low border-none rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-primary-container cursor-pointer appearance-none"
+                  >
+                    <option value="" disabled>Select your region...</option>
+                    <option value="Quezon City">Quezon City</option>
+                    <option value="Cavite">Cavite</option>
+                    <option value="Metro Manila">Metro Manila (Default)</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
