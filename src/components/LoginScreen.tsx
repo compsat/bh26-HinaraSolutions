@@ -174,37 +174,8 @@ export function LoginScreen({ onBack }: LoginScreenProps) {
                 {!loading && <ArrowRight className="w-4 h-4" />}
               </button>
 
-              {!isSignUp && (
-                <>
-                  <div className="mt-8 relative">
-                    <div className="absolute inset-0 flex items-center">
-                      <div className="w-full border-t border-outline-variant/20"></div>
-                    </div>
-                    <div className="relative flex justify-center text-[10px] font-bold uppercase tracking-widest">
-                      <span className="bg-surface-container-lowest px-4 text-on-surface-variant">Or continue with</span>
-                    </div>
-                  </div>
-
-                  <div className="mt-8 grid grid-cols-2 gap-4">
-                    <button 
-                      type="button"
-                      onClick={() => supabase.auth.signInWithOAuth({ provider: 'google' })}
-                      className="flex items-center justify-center gap-3 py-3 bg-surface-container-low rounded-2xl hover:bg-surface-container-high transition-colors text-sm font-bold"
-                    >
-                      <Chrome className="w-5 h-5" />
-                      Google
-                    </button>
-                    <button 
-                      type="button"
-                      onClick={() => supabase.auth.signInWithOAuth({ provider: 'github' })}
-                      className="flex items-center justify-center gap-3 py-3 bg-surface-container-low rounded-2xl hover:bg-surface-container-high transition-colors text-sm font-bold"
-                    >
-                      <Github className="w-5 h-5" />
-                      GitHub
-                    </button>
-                  </div>
-                </>
-              )}
+              
+    
             </motion.form>
           ) : (
             <motion.div 
