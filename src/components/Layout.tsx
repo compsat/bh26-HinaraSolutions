@@ -13,6 +13,7 @@ import {
   TrendingUp
 } from 'lucide-react';
 import { cn } from '@/src/lib/utils';
+import { supabase } from '@/src/lib/supabase';
 
 type Tab = 'dashboard' | 'appliances' | 'insights' | 'community' | 'settings';
 
@@ -74,7 +75,10 @@ export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
             <HelpCircle className="w-5 h-5" />
             Support
           </button>
-          <button className="flex items-center gap-3 py-2 px-3 text-sm font-medium text-on-surface opacity-70 hover:opacity-100">
+          <button 
+            onClick={() => supabase.auth.signOut()}
+            className="flex items-center gap-3 py-2 px-3 text-sm font-medium text-on-surface opacity-70 hover:opacity-100"
+          >
             <LogOut className="w-5 h-5" />
             Logout
           </button>
@@ -92,7 +96,9 @@ export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
 export function Header({ title }: { title: string }) {
   return (
     <header className="w-full sticky top-0 z-40 bg-surface/80 backdrop-blur-md flex justify-between items-center px-8 py-4 border-b border-outline-variant/10">
-      <h2 className="text-2xl font-bold tracking-tight text-primary font-headline">{title}</h2>
+      <div className="flex items-center gap-4">
+        <h2 className="text-2xl font-bold tracking-tight text-primary font-headline">{title}</h2>
+      </div>
       
       <div className="flex items-center gap-6">
         <div className="flex items-center gap-2 px-4 py-2 bg-surface-container-low rounded-full">

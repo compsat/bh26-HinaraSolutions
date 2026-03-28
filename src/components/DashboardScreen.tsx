@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
   BarChart, 
   Bar, 
@@ -16,6 +16,7 @@ import {
   TrendingUp
 } from 'lucide-react';
 import { motion } from 'motion/react';
+import { supabase } from '@/src/lib/supabase';
 
 const weeklyData = [
   { name: 'Mon', value: 40 },
@@ -28,6 +29,25 @@ const weeklyData = [
 ];
 
 export function DashboardScreen() {
+  const [userAppliances, setUserAppliances] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchUserMetadata = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user?.user_metadata?.appliances) {
+        setUserAppliances(user.user_metadata.appliances);
+      } else {
+        setUserAppliances([
+          { id: 'ac', name: 'Air Conditioner' },
+          { id: 'fridge', name: 'Refrigerator' },
+          { id: 'lights', name: 'Smart Lighting' },
+          { id: 'kettle', name: 'Electric Kettle' },
+        ]);
+      }
+    };
+    fetchUserMetadata();
+  }, []);
+
   return (
     <div className="p-8 space-y-8 max-w-7xl mx-auto">
       <div className="grid grid-cols-12 gap-8">
@@ -131,10 +151,9 @@ export function DashboardScreen() {
               <div className="space-y-2">
                 <label className="text-[10px] uppercase tracking-wider text-on-surface-variant font-bold">Appliance Type</label>
                 <select className="w-full bg-surface-container-low border-none rounded-xl py-3 px-4 text-sm focus:ring-2 focus:ring-primary-container">
-                  <option>Air Conditioner</option>
-                  <option>Refrigerator</option>
-                  <option>Smart Lighting</option>
-                  <option>Electric Kettle</option>
+                  {userAppliances.map((app, i) => (
+                    <option key={i}>{app.name}</option>
+                  ))}
                 </select>
               </div>
               <div className="space-y-2">
