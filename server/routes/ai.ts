@@ -24,7 +24,7 @@ router.post('/generate-insights', async (req: AuthRequest, res) => {
 
     const appliances = appRes.data || [];
     const usageLogs = logRes.data || [];
-    const ratePerKwh = rateRes.data?.[0]?.rate_per_kwh || 11.8569;
+    const ratePerKwh = rateRes.data?.[0]?.rate_per_kwh || 13.8161;
     const monthlyBudget = profileRes.data?.monthly_budget || 4000;
 
     // Calculate costs
@@ -98,7 +98,7 @@ router.post('/chat', async (req: AuthRequest, res) => {
 
     const appliances = appRes.data || [];
     const usageLogs = logRes.data || [];
-    const ratePerKwh = rateRes.data?.[0]?.rate_per_kwh || 11.8569;
+    const ratePerKwh = rateRes.data?.[0]?.rate_per_kwh || 13.8161;
     const monthlyBudget = profileRes.data?.monthly_budget || 4000;
 
     const totalKwh = usageLogs.reduce((s: number, l: any) => s + Number(l.estimated_kwh || 0), 0);
@@ -142,7 +142,7 @@ router.get('/predict', async (req: AuthRequest, res) => {
     const prediction = predictMonthlyBill({
       appliances: appRes.data || [],
       usageLogs: logRes.data || [],
-      ratePerKwh: rateRes.data?.[0]?.rate_per_kwh || 11.8569,
+      ratePerKwh: rateRes.data?.[0]?.rate_per_kwh || 13.8161,
       currentDayOfMonth: now.getDate(),
       daysInMonth: new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate(),
     });

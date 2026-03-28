@@ -25,7 +25,7 @@ export const APPLIANCE_DEFAULTS: Record<ApplianceType, ApplianceDefault> = {
   other:            { label: 'Other',             emoji: '🔌', wattage: 100,  defaultHours: 1,    isAlwaysOn: false },
 };
 
-export const DEFAULT_RATE_PER_KWH = 11.8569;
+export const DEFAULT_RATE_PER_KWH = 13.8161; // March 2026 Meralco rate
 export const PH_GRID_EMISSION_FACTOR = 0.7; // kg CO2 per kWh
 export const DEFAULT_MONTHLY_BUDGET = 4000;
 
