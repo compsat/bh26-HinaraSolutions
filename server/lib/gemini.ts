@@ -54,6 +54,8 @@ Return ONLY the JSON array, no other text.`;
     const response = await ai.models.generateContent({
       model: 'gemini-2.0-flash',
       contents: prompt,
+      config: { responseMimeType: 'application/json' },
+
     });
 
     const text = response.text || '';
