@@ -15,7 +15,7 @@ export function LandingScreen({ onGetStarted }: LandingScreenProps) {
           <div className="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center">
             <Zap className="text-primary w-6 h-6 fill-primary" />
           </div>
-          <h1 className="text-xl font-black text-primary font-headline tracking-tight">WattZup</h1>
+          <h1 className="text-xl font-black text-primary font-headline tracking-tight">WattZap</h1>
         </div>
         <div className="hidden md:flex items-center gap-8">
           <a href="#features" className="text-sm font-bold text-on-surface-variant hover:text-primary transition-colors">Features</a>
@@ -51,7 +51,7 @@ export function LandingScreen({ onGetStarted }: LandingScreenProps) {
               <span className="text-primary italic">Energy DNA</span>
             </h2>
             <p className="text-lg md:text-xl text-on-surface-variant max-w-2xl mx-auto mb-12 font-medium leading-relaxed">
-              WattZup uses advanced AI to decode your power consumption, predict solar yields, and help you save up to 40% on your monthly bills.
+              WattZap uses AI to decode your power consumption, and help you worry less about your power consumption.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <button 
@@ -61,53 +61,9 @@ export function LandingScreen({ onGetStarted }: LandingScreenProps) {
                 Start Saving Now
                 <ArrowRight className="w-5 h-5" />
               </button>
-              <button className="w-full sm:w-auto px-10 py-5 bg-surface-container-low text-on-surface rounded-2xl font-black font-headline text-sm uppercase tracking-widest hover:bg-surface-container-high transition-all">
-                Watch Demo
-              </button>
             </div>
           </motion.div>
 
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-            className="mt-20 relative"
-          >
-            <div className="relative rounded-[3rem] overflow-hidden shadow-2xl border-8 border-surface-container-low">
-              <img 
-                src="https://picsum.photos/seed/dashboard/1200/800" 
-                alt="WattZup Dashboard Preview" 
-                className="w-full h-auto"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-surface/40 to-transparent"></div>
-            </div>
-            
-            {/* Floating Stats */}
-            <div className="absolute -left-10 top-1/4 hidden lg:block p-6 bg-white rounded-3xl shadow-xl border border-outline-variant/10 animate-bounce-slow">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-green-100 flex items-center justify-center">
-                  <Leaf className="text-green-600 w-6 h-6" />
-                </div>
-                <div>
-                  <p className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">CO2 Saved</p>
-                  <p className="text-xl font-black text-on-surface">12.4 kg</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="absolute -right-10 bottom-1/4 hidden lg:block p-6 bg-white rounded-3xl shadow-xl border border-outline-variant/10 animate-bounce-slow delay-700">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-primary-container flex items-center justify-center">
-                  <Sun className="text-primary w-6 h-6" />
-                </div>
-                <div>
-                  <p className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Solar Yield</p>
-                  <p className="text-xl font-black text-on-surface">4.8 kWh</p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
         </div>
       </section>
 
@@ -124,17 +80,17 @@ export function LandingScreen({ onGetStarted }: LandingScreenProps) {
               {
                 icon: BarChart3,
                 title: "Real-time Analytics",
-                desc: "Track every appliance's consumption with millisecond precision."
+                desc: "Track every appliance's consumption with precision."
               },
               {
                 icon: BrainCircuit,
                 title: "AI Forecasting",
-                desc: "Predict your next bill and solar production with 98% accuracy."
+                desc: "Predict your next bill with AI."
               },
               {
                 icon: Shield,
                 title: "Safety Alerts",
-                desc: "Get notified about unusual power spikes or faulty appliances."
+                desc: "Get notified about unusual power spikes and power price changes."
               }
             ].map((feature, i) => (
               <div key={i} className="p-10 bg-surface rounded-[2.5rem] border border-outline-variant/10 hover:shadow-xl transition-all group">
@@ -159,7 +115,7 @@ export function LandingScreen({ onGetStarted }: LandingScreenProps) {
           <div className="relative z-10 max-w-2xl">
             <h3 className="text-3xl md:text-5xl font-black font-headline text-white mb-8">Join the Neighborhood Revolution</h3>
             <p className="text-white/80 text-lg font-medium mb-12">
-              Over 10,000 households are already saving together. Compete in local challenges, earn rewards, and make your neighborhood the greenest in the city.
+              Over 3 households are already saving together. Compete in local challenges, earn rewards, and make your neighborhood the greenest in the city.
             </p>
             <div className="flex items-center gap-6">
               <div className="flex -space-x-4">
@@ -173,7 +129,7 @@ export function LandingScreen({ onGetStarted }: LandingScreenProps) {
                   />
                 ))}
               </div>
-              <p className="text-white font-bold text-sm">Join 10k+ WattZuppers</p>
+              <p className="text-white font-bold text-sm">Join 3+ WattZappers</p>
             </div>
           </div>
         </div>
@@ -183,9 +139,9 @@ export function LandingScreen({ onGetStarted }: LandingScreenProps) {
       <footer className="py-12 px-8 border-t border-outline-variant/10 text-center">
         <div className="flex items-center justify-center gap-3 mb-6">
           <Zap className="text-primary w-6 h-6 fill-primary" />
-          <span className="text-xl font-black text-primary font-headline tracking-tight">WattZup</span>
+          <span className="text-xl font-black text-primary font-headline tracking-tight">WattZap</span>
         </div>
-        <p className="text-sm text-on-surface-variant font-medium mb-8">© 2026 WattZup Energy Intelligence. All rights reserved.</p>
+        <p className="text-sm text-on-surface-variant font-medium mb-8">© 2026 WattZap Energy Intelligence. All rights reserved.</p>
         <div className="flex justify-center gap-8">
           <a href="#" className="text-xs font-bold text-on-surface-variant hover:text-primary">Privacy Policy</a>
           <a href="#" className="text-xs font-bold text-on-surface-variant hover:text-primary">Terms of Service</a>
