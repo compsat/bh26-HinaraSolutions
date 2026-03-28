@@ -124,7 +124,7 @@ export default function App() {
 
         <footer className="py-8 px-12 border-t border-outline-variant/10 text-center">
           <p className="text-xs text-on-surface-variant font-medium">
-            © 2026 WattZup Energy Intelligence • Powered by SolarAI
+            © 2026 WattZap Energy Intelligence • Powered by SolarAI
           </p>
         </footer>
       </main>

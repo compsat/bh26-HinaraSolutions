@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { supabase } from '@/src/lib/supabase';
 import { Zap, Mail, Lock, ArrowRight, Github, Chrome, ChevronLeft, Plus, Minus, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { cn } from '@/src/lib/utils'; // Moved to the top!
 
 interface LoginScreenProps {
   onBack?: () => void;
@@ -36,6 +37,18 @@ export function LoginScreen({ onBack }: LoginScreenProps) {
     e.preventDefault();
     setError(null);
 
+    // --- NEW: Client-side validation to prevent 422 Backend Errors ---
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Please enter a valid, complete email address.");
+      return;
+    }
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters long.");
+      return;
+    }
+    // -----------------------------------------------------------------
+
     if (isSignUp && step === 1) {
       setStep(2);
       return;
@@ -44,8 +57,8 @@ export function LoginScreen({ onBack }: LoginScreenProps) {
     setLoading(true);
     try {
       if (isSignUp) {
-        const { data, error } = await supabase.auth.signUp({ 
-          email, 
+        const { data, error } = await supabase.auth.signUp({
+          email,
           password,
           options: {
             data: {
@@ -54,7 +67,7 @@ export function LoginScreen({ onBack }: LoginScreenProps) {
           }
         });
         if (error) throw error;
-        alert('Check your email for the confirmation link!');
+        alert('Check your email for the confirmation link! (Or turn off email confirmation in Supabase dashboard to skip this during the hackathon)');
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
@@ -68,8 +81,8 @@ export function LoginScreen({ onBack }: LoginScreenProps) {
   };
 
   const updateQuantity = (id: string, delta: number) => {
-    setAppliances(prev => prev.map(a => 
-      a.id === id ? { ...a, quantity: Math.max(0, a.quantity + delta) } : a
+    setAppliances(prev => prev.map(a =>
+        a.id === id ? { ...a, quantity: Math.max(0, a.quantity + delta) } : a
     ));
   };
 
@@ -161,37 +174,8 @@ export function LoginScreen({ onBack }: LoginScreenProps) {
                 {!loading && <ArrowRight className="w-4 h-4" />}
               </button>
 
-              {!isSignUp && (
-                <>
-                  <div className="mt-8 relative">
-                    <div className="absolute inset-0 flex items-center">
-                      <div className="w-full border-t border-outline-variant/20"></div>
-                    </div>
-                    <div className="relative flex justify-center text-[10px] font-bold uppercase tracking-widest">
-                      <span className="bg-surface-container-lowest px-4 text-on-surface-variant">Or continue with</span>
-                    </div>
-                  </div>
-
-                  <div className="mt-8 grid grid-cols-2 gap-4">
-                    <button 
-                      type="button"
-                      onClick={() => supabase.auth.signInWithOAuth({ provider: 'google' })}
-                      className="flex items-center justify-center gap-3 py-3 bg-surface-container-low rounded-2xl hover:bg-surface-container-high transition-colors text-sm font-bold"
-                    >
-                      <Chrome className="w-5 h-5" />
-                      Google
-                    </button>
-                    <button 
-                      type="button"
-                      onClick={() => supabase.auth.signInWithOAuth({ provider: 'github' })}
-                      className="flex items-center justify-center gap-3 py-3 bg-surface-container-low rounded-2xl hover:bg-surface-container-high transition-colors text-sm font-bold"
-                    >
-                      <Github className="w-5 h-5" />
-                      GitHub
-                    </button>
-                  </div>
-                </>
-              )}
+              
+    
             </motion.form>
           ) : (
             <motion.div 
@@ -264,5 +248,3 @@ export function LoginScreen({ onBack }: LoginScreenProps) {
     </div>
   );
 }
-
-import { cn } from '@/src/lib/utils';
