@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   LayoutDashboard, Zap, BrainCircuit, Users, Settings, Mic, 
-  Search, Bell, LogOut, HelpCircle, TrendingUp
+  Search, Bell, LogOut, TrendingUp
 } from 'lucide-react';
 import { cn } from '@/src/lib/utils';
 import { supabase } from '@/src/lib/supabase';
@@ -85,20 +85,6 @@ export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
             </div>
           </div>
 
-          <div className="flex flex-col gap-1">
-            <button className="flex items-center gap-3 py-2 px-3 text-sm font-medium text-on-surface opacity-70 hover:opacity-100">
-              <HelpCircle className="w-5 h-5" />
-              Support
-            </button>
-            <button 
-              onClick={() => supabase.auth.signOut()}
-              className="flex items-center gap-3 py-2 px-3 text-sm font-medium text-on-surface opacity-70 hover:opacity-100"
-            >
-              <LogOut className="w-5 h-5" />
-              Logout
-            </button>
-          </div>
-
           <button
             onClick={() => setShowVoice(true)}
             className="w-full flex items-center justify-center gap-2 py-3 bg-primary-container text-on-primary-container rounded-full font-bold shadow-sm hover:shadow-md transition-all active:scale-95"
@@ -123,6 +109,8 @@ export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
 
 export function Header({ title }: { title: string }) {
   const [unreadCount, setUnreadCount] = useState(0);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
@@ -130,6 +118,17 @@ export function Header({ title }: { title: string }) {
         api.getUnreadInsightCount(user.id).then(setUnreadCount).catch(() => {});
       }
     });
+  }, []);
+
+  // Close the dropdown if the user clicks outside of it
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsProfileMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   return (
@@ -157,14 +156,38 @@ export function Header({ title }: { title: string }) {
               </span>
             )}
           </button>
-          <button className="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-container shadow-sm active:scale-95 transition-transform">
-            <img 
-              src="https://picsum.photos/seed/user/100/100" 
-              alt="User profile" 
-              className="w-full h-full object-cover"
-              referrerPolicy="no-referrer"
-            />
-          </button>
+          
+          {/* Profile Dropdown Container */}
+          <div className="relative" ref={menuRef}>
+            <button 
+              onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
+              className="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-container shadow-sm active:scale-95 transition-transform block"
+            >
+              <img 
+                src="https://picsum.photos/seed/user/100/100" 
+                alt="User profile" 
+                className="w-full h-full object-cover"
+                referrerPolicy="no-referrer"
+              />
+            </button>
+
+            {/* Dropdown Menu */}
+            {isProfileMenuOpen && (
+              <div className="absolute right-0 mt-3 w-48 bg-surface-container-lowest rounded-xl shadow-lg border border-outline-variant/20 py-2 z-50">
+                <button 
+                  onClick={() => {
+                    setIsProfileMenuOpen(false);
+                    supabase.auth.signOut();
+                  }}
+                  className="w-full flex items-center gap-3 px-4 py-2 text-sm font-medium text-error hover:bg-error/10 transition-colors"
+                >
+                  <LogOut className="w-4 h-4" />
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
+
         </div>
       </div>
     </header>
