@@ -153,6 +153,31 @@ export interface WeeklyDataPoint {
   date: string;
 }
 
+export interface MeralcoBill {
+  id: string;
+  user_id: string;
+  billing_month: string; // 'YYYY-MM' format
+  actual_kwh: number;
+  actual_amount: number;
+  our_estimated_kwh: number;
+  our_estimated_amount: number;
+  accuracy_percent: number;
+  kwh_difference: number;
+  amount_difference: number;
+  created_at: string;
+}
+
+export interface BillAccuracy {
+  currentMonth: {
+    estimated: number;
+    estimatedKwh: number;
+    billingMonth: string;
+  };
+  history: MeralcoBill[];
+  avgAccuracy: number;
+  trend: 'improving' | 'declining' | 'stable' | 'no_data';
+}
+
 export interface ChatMessage {
   role: 'user' | 'assistant';
   content: string;
@@ -176,4 +201,46 @@ export interface PredictionResult {
   confidence: { low: number; high: number };
   adjustmentFactors: { historical: number; weather: number; trend: number };
   dailyForecast: { date: string; predictedKwh: number }[];
+}
+
+export interface BillBreakdown {
+  generation: number;
+  transmission: number;
+  distribution: number;
+  subsidies: number;
+  governmentTaxes: number;
+  totalRate: number;
+  totalBill: number;
+  totalKwh: number;
+}
+
+export interface TemperatureInsight {
+  currentTemp: number;
+  avgTemp: number;
+  heatIndex: string;
+  acImpactPercent: number;
+  acExtraCost: number;
+  recommendation: string;
+}
+
+export interface MonthlyEstimate {
+  estimatedKwh: number;
+  estimatedBill: number;
+  confidenceLow: number;
+  confidenceHigh: number;
+  breakdown: BillBreakdown;
+  topConsumers: { name: string; type: string; kwhPercent: number; monthlyCost: number }[];
+  temperatureImpact: TemperatureInsight | null;
+  comparisonVsLastMonth: { kwhChange: number; costChange: number; direction: 'up' | 'down' | 'same' };
+  dailyAvgKwh: number;
+  dailyAvgCost: number;
+  daysRemaining: number;
+  savingsPotential: number;
+}
+
+export interface EnhancedInsightsData {
+  monthlyEstimate: MonthlyEstimate;
+  prediction: PredictionResult;
+  insights: AiInsight[];
+  achievements: Achievement[];
 }

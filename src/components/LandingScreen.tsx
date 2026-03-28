@@ -12,8 +12,8 @@ export function LandingScreen({ onGetStarted }: LandingScreenProps) {
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/10 px-8 py-4 flex justify-between items-center">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center">
-            <Zap className="text-primary w-6 h-6 fill-primary" />
+          <div className="w-15 h-15 rounded-xl bg-primary-container flex items-center justify-center">
+            <img src="/wattzap_logo.png" alt="WattZup" className="w-15 h-15 rounded-xl object-contain" />
           </div>
           <h1 className="text-xl font-black text-primary font-headline tracking-tight">WattZap</h1>
         </div>
