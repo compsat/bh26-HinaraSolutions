@@ -67,7 +67,6 @@ export function DashboardScreen() {
   const burnRate = dashboardData?.burnRate ?? 0;
   const projectedBill = dashboardData?.projectedBill ?? 0;
   const budgetStatus = dashboardData?.budgetStatus ?? 'under';
-  const percentUsed = dashboardData?.percentUsed ?? 0;
   const monthlyBudget = dashboardData?.monthlyBudget ?? 4000;
 
   const statusLabel = budgetStatus === 'over' ? 'Over Budget' : budgetStatus === 'warning' ? 'Near Budget' : 'Under Budget';
@@ -92,8 +91,12 @@ export function DashboardScreen() {
   const maxChartVal = Math.max(...chartData.map(d => d.value), 1);
 
   // Dynamic Gauge Rotation Calculation
-  const clampedPercent = Math.min(Math.max(percentUsed, 0), 100);
-  const gaugeRotation = -135 + (clampedPercent / 100) * 180;
+  const projectedPercent = monthlyBudget > 0 ? (projectedBill / monthlyBudget) * 100 : 0;
+  const clampedPercent = Math.min(Math.max(projectedPercent, 0), 100);
+  
+  // FIXED: -225deg hides the border perfectly in the bottom half. 
+  // It will now sweep perfectly from the left-most edge to the right.
+  const gaugeRotation = -225 + (clampedPercent / 100) * 180;
 
   if (loading) {
     return (
@@ -129,14 +132,24 @@ export function DashboardScreen() {
                     transform: `rotate(${gaugeRotation}deg)` 
                   }}
                 ></div>
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-center pb-2">
-                  <p className="font-headline font-extrabold text-4xl text-on-surface">{formatPeso(burnRate)}</p>
-                  <p className="font-label text-xs uppercase text-on-surface-variant font-bold">per day</p>
+                
+                {/* UPDATED: Clean layout with predicted bill vs budget */}
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-center pb-2 w-full">
+                  <p className={`font-headline font-extrabold text-3xl ${statusColor} flex items-baseline justify-center gap-1`}>
+                    {formatPeso(projectedBill)}
+                    <span className="text-lg text-on-surface-variant font-semibold">
+                      / {formatPeso(monthlyBudget)}
+                    </span>
+                  </p>
+                  <p className="font-label text-xs uppercase text-on-surface-variant font-bold mt-1">Predicted Bill</p>
                 </div>
               </div>
 
+              {/* Per Day Rate below the gauge */}
               <div className="mt-8 text-center">
-                <h4 className="font-headline font-bold text-lg">Predicted Bill: <span className={`font-extrabold tracking-tight ${statusColor}`}>{formatPeso(projectedBill)}</span></h4>
+                <h4 className="font-headline font-bold text-lg">
+                  Per Day Rate: <span className="font-extrabold tracking-tight text-on-surface">{formatPeso(burnRate)}</span>
+                </h4>
                 <p className="text-on-surface-variant font-semibold text-sm mt-1">
                   Status: <span className={`underline decoration-4 underline-offset-4 ${
                     budgetStatus === 'over' ? 'decoration-red-500' : budgetStatus === 'warning' ? 'decoration-amber-500' : 'decoration-primary-container'

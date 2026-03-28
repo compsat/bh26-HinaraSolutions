@@ -195,7 +195,7 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
     budgetStatus: calculateBudgetStatus(projectedBill, budget),
     dailyAvgCost,
     daysLeft: getDaysRemainingInMonth(),
-    percentUsed: budget > 0 ? Math.round((totalCost / budget) * 100) : 0,
+    percentUsed: budget > 0 ? Math.round((projectedBill / budget) * 100) : 0,
     monthlyBudget: budget,
   };
 }
