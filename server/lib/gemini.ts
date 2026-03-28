@@ -41,7 +41,7 @@ Focus on Filipino household context (Meralco, tropical climate, common Filipino 
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
       contents: prompt,
-      // UPGRADE: Forces Gemini to return pure JSON, no markdown formatting!
+    
       config: { responseMimeType: 'application/json' },
     });
 
