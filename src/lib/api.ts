@@ -381,7 +381,7 @@ export async function chatWithAI(userId: string, message: string, history: ChatM
 
 export async function parseVoiceTranscript(userId: string, transcript: string): Promise<VoiceParseResult> {
   try {
-    const res = await fetch('/api/voice/parse', {
+    const res = await fetch('http://localhost:3001/api/voice/parse', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId, transcript }),

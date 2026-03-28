@@ -13,6 +13,11 @@ interface UserEnergyContext {
   projectedBill: number;
 }
 
+// Helper to get the correct YYYY-MM-DD in Philippine Time
+const getPHDate = () => {
+  return new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Manila' });
+};
+
 export async function generateInsights(context: UserEnergyContext): Promise<any[]> {
   const prompt = `You are an expert Filipino energy advisor for the WattZup app. Analyze this household's energy data and return ONLY a JSON array of 3-5 insights.
 
@@ -30,21 +35,17 @@ Return a JSON array where each object has:
 - description: actionable advice referencing specific appliances and ₱ amounts (max 200 chars)
 - potential_savings: number in PHP, or null
 
-Focus on Filipino household context (Meralco, tropical climate, common Filipino appliance usage patterns). Be specific with peso amounts.
-Return ONLY the JSON array, no other text.`;
+Focus on Filipino household context (Meralco, tropical climate, common Filipino appliance usage patterns). Be specific with peso amounts.`;
 
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
+      model: 'gemini-2.5-flash',
       contents: prompt,
+      // UPGRADE: Forces Gemini to return pure JSON, no markdown formatting!
+      config: { responseMimeType: 'application/json' },
     });
 
-    const text = response.text || '';
-    const jsonMatch = text.match(/\[[\s\S]*\]/);
-    if (jsonMatch) {
-      return JSON.parse(jsonMatch[0]);
-    }
-    return [];
+    return JSON.parse(response.text || '[]');
   } catch (err) {
     console.error('Gemini generateInsights error:', err);
     return [];
@@ -80,7 +81,7 @@ Keep responses concise (under 300 words). Be warm and helpful.`;
 
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
+      model: 'gemini-2.5-flash',
       contents,
     });
     return response.text || 'Hindi ko ma-process ang request mo ngayon. Try again! ⚡';
@@ -107,23 +108,19 @@ Parse their speech into structured usage log entries. Return ONLY a JSON object 
   "confirmation": "A friendly Taglish confirmation message with ⚡ emoji"
 }
 
-Today's date is ${new Date().toISOString().split('T')[0]}.
+Today's date is ${getPHDate()}.
 If the user says "today", use today's date. If they say "yesterday", use yesterday's date.
-Match appliance names to the registered appliances above. If no match, use the closest appliance_type.
-Return ONLY the JSON, no other text.`;
+Match appliance names to the registered appliances above. If no match, use the closest appliance_type.`;
 
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
+      model: 'gemini-2.5-flash',
       contents: prompt,
+      // UPGRADE: Bulletproof JSON parsing
+      config: { responseMimeType: 'application/json' },
     });
 
-    const text = response.text || '';
-    const jsonMatch = text.match(/\{[\s\S]*\}/);
-    if (jsonMatch) {
-      return JSON.parse(jsonMatch[0]);
-    }
-    return { entries: [], confirmation: 'Sorry, hindi ko na-gets. Try again! ⚡' };
+    return JSON.parse(response.text || '{"entries": [], "confirmation": "Sorry, hindi ko na-gets. Try again! ⚡"}');
   } catch (err) {
     console.error('Gemini parseVoice error:', err);
     return { entries: [], confirmation: 'May error sa parsing. Please try again! ⚡' };

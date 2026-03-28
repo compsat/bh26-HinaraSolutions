@@ -16,17 +16,26 @@ router.post('/parse', async (req: AuthRequest, res) => {
     }
 
     // Fetch user's appliances for matching
-    const { data: appliances } = await supabaseAdmin
+   const { data: appliances, error: dbError } = await supabaseAdmin
       .from('appliances')
       .select('*')
       .eq('user_id', userId);
 
+    if (dbError) {
+      console.error('DATABASE ERROR:', dbError);
+      return res.status(500).json({ error: 'Database fetch failed' });
+    }
+
+    console.log('Appliances found count:', appliances?.length || 0);
+
     if (!appliances || appliances.length === 0) {
+      console.log('Stopping: User has no appliances.');
       return res.json({
         parsed_entries: [],
         confirmation_text: 'No appliances found. Please add appliances first! ⚡',
       });
     }
+
 
     // Parse with Gemini
     const result = await parseVoiceInput(transcript, appliances);
