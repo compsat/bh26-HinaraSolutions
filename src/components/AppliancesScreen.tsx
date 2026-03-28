@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
   Plus, 
   ChevronDown, 
@@ -11,11 +11,42 @@ import {
   Clock,
   Thermometer,
   Settings2,
-  Zap
+  Zap,
+  Laptop
 } from 'lucide-react';
 import { motion } from 'motion/react';
+import { supabase } from '@/src/lib/supabase';
+
+const ICON_MAP: Record<string, any> = {
+  fridge: Refrigerator,
+  ac: Wind,
+  washer: WashingMachine,
+  tv: Tv,
+  microwave: Zap,
+  computer: Laptop,
+};
 
 export function AppliancesScreen() {
+  const [userAppliances, setUserAppliances] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchUserMetadata = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user?.user_metadata?.appliances) {
+        setUserAppliances(user.user_metadata.appliances);
+      } else {
+        // Fallback to defaults if metadata is empty
+        setUserAppliances([
+          { id: 'ac', name: 'Master AC', quantity: 1 },
+          { id: 'fridge', name: 'Kitchen Fridge', quantity: 1 },
+          { id: 'washer', name: 'Laundry Box', quantity: 1 },
+          { id: 'tv', name: 'Living Room TV', quantity: 1 },
+        ]);
+      }
+    };
+    fetchUserMetadata();
+  }, []);
+
   return (
     <div className="p-8 max-w-7xl mx-auto">
       <header className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
@@ -42,46 +73,19 @@ export function AppliancesScreen() {
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Appliances Grid */}
         <section className="flex-grow grid grid-cols-1 md:grid-cols-2 gap-6">
-          <ApplianceCard 
-            icon={Wind} 
-            name="Master AC" 
-            status="Active" 
-            value="1.2" 
-            unit="kW" 
-            cost="₱142 Today" 
-            active 
-            chart={[40, 60, 50, 80, 95, 70, 40]}
-          />
-          <ApplianceCard 
-            icon={Refrigerator} 
-            name="Kitchen Fridge" 
-            status="Active" 
-            value="180" 
-            unit="W" 
-            cost="₱52 Today" 
-            active 
-            chart={[40, 38, 42, 41, 40, 39, 41]}
-          />
-          <ApplianceCard 
-            icon={WashingMachine} 
-            name="Laundry Box" 
-            status="Inactive" 
-            value="0" 
-            unit="W" 
-            cost="₱28 Today" 
-            active={false} 
-            chart={[10, 10, 90, 10, 10, 10, 10]}
-          />
-          <ApplianceCard 
-            icon={Tv} 
-            name="Living Room TV" 
-            status="Active" 
-            value="120" 
-            unit="W" 
-            cost="₱12 Today" 
-            active 
-            chart={[15, 15, 15, 65, 75, 85, 90]}
-          />
+          {userAppliances.map((app, idx) => (
+            <ApplianceCard 
+              key={`${app.id}-${idx}`}
+              icon={ICON_MAP[app.id] || Zap} 
+              name={app.quantity > 1 ? `${app.name} (x${app.quantity})` : app.name} 
+              status="Active" 
+              value={app.id === 'ac' ? '1.2' : app.id === 'fridge' ? '180' : '120'} 
+              unit={app.id === 'ac' ? 'kW' : 'W'} 
+              cost={`₱${app.id === 'ac' ? '142' : '52'} Today`} 
+              active={true} 
+              chart={Array.from({ length: 7 }, () => Math.floor(Math.random() * 60) + 30)}
+            />
+          ))}
         </section>
 
         {/* Optimization Sidebar */}
