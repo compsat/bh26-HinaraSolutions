@@ -78,6 +78,23 @@ export function CommunityScreen() {
   const trailingPct = totalUsage === 1 ? 50 : (Number(leadingTeam.total_kwh_reduced) / totalUsage) * 100;
   const totalMembers = Number(leadingTeam.member_count) + Number(trailingTeam.member_count);
 
+  // --- IMPACT CALCULATOR FORMULAS ---
+  // Constants based on Philippine Grid and EPA standards
+  const CO2_PER_KWH_KG = 0.7122;
+  const KG_CO2_PER_TREE = 21.77;
+  const BASELINE_MONTHLY_KWH = 337; // Approx usage for a Php 4,000 budget
+
+  // Find the current user's region data
+  const localData = regionalRankings.find(r => r.region === userLocation) || { avg_savings_pct: 0, total_users: 0 };
+
+  // Calculate raw metrics
+  const localKwhSaved = (localData.avg_savings_pct / 100) * localData.total_users * BASELINE_MONTHLY_KWH;
+  const localCo2SavedKg = localKwhSaved * CO2_PER_KWH_KG;
+
+  // Format for the UI
+  const co2SavedTons = (localCo2SavedKg / 1000).toFixed(2);
+  const treesPlanted = Math.floor(localCo2SavedKg / KG_CO2_PER_TREE);
+
   if (loading) {
     return <div className="p-8 flex items-center justify-center min-h-[60vh]"><Loader2 className="w-8 h-8 animate-spin text-primary" /></div>;
   }
@@ -88,16 +105,35 @@ export function CommunityScreen() {
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
           <div className="lg:col-span-8 bg-surface-container-low rounded-[2rem] p-8 relative overflow-hidden flex items-center min-h-[320px] border border-outline-variant/10 shadow-sm">
             <div className="relative z-10 max-w-lg">
-            <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-primary mb-4 block">
-              Local Impact: {userLocation}
-            </span>
+              <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-primary mb-4 block">
+                Local Impact: {userLocation}
+              </span>
+
               <h2 className="text-4xl md:text-5xl font-extrabold font-headline leading-tight mb-4">
-                Together, we've saved <span className="text-primary">12,480 Tons</span> of CO2
+                Together, we've saved <span className="text-primary">{co2SavedTons} Tons</span> of CO2
               </h2>
-              <p className="text-on-surface-variant text-lg mb-8">That's equivalent to planting over <span className="font-bold">200,000 trees</span> across the Philippines this year.</p>
+
+              <p className="text-on-surface-variant text-lg mb-8">
+                That's equivalent to planting over <span className="font-bold text-primary">{treesPlanted.toLocaleString()} trees</span> across {userLocation} this month.
+              </p>
+
               <div className="flex gap-4">
-                <button className="bg-primary text-white px-6 py-3 rounded-full font-semibold hover:opacity-90 transition-opacity">View Impact Map</button>
-                <button className="border border-outline-variant px-6 py-3 rounded-full font-semibold hover:bg-white transition-colors">How it's calculated</button>
+                <button className="bg-primary text-white px-6 py-3 rounded-full font-semibold hover:opacity-90 transition-opacity">
+                  View Impact Map
+                </button>
+                <button
+                    onClick={() => alert(`THE SCIENCE:\n\n1 kWh saved = ${CO2_PER_KWH_KG} kg of CO2 avoided (PH Grid Standard).\n1 Tree = ${KG_CO2_PER_TREE} kg of CO2 absorbed per year.\n\n${userLocation} users saved ${localKwhSaved.toFixed(1)} kWh total this month!`)}
+                    className="border border-outline-variant px-6 py-3 rounded-full font-semibold hover:bg-white transition-colors"
+                >
+                  How it's calculated
+                </button>
+              </div>
+            </div>
+            <div className="absolute right-0 bottom-0 top-0 w-1/3 hidden md:flex items-center justify-center bg-gradient-to-l from-primary-container/20 to-transparent">
+              <div className="relative">
+                <div className="w-48 h-48 bg-primary-container rounded-full blur-3xl opacity-30 absolute -z-10 animate-pulse"></div>
+                <img src="/zapperBird.png"
+                     alt="zapperBird mascot" className="w-60 h-60 object-contain drop-shadow-xl" referrerPolicy="no-referrer" />
               </div>
             </div>
           </div>
