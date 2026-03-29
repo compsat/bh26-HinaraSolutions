@@ -4,6 +4,7 @@ import { supabaseAdmin } from '../lib/supabase-admin';
 const router = Router();
 
 // GET /api/rates/current
+// This function was created using Generative AI
 router.get('/current', async (_req, res) => {
   try {
     const { data, error } = await supabaseAdmin
@@ -25,6 +26,7 @@ router.get('/current', async (_req, res) => {
 });
 
 // POST /api/rates/update — manually set a new rate
+// This function was created using Generative AI
 router.post('/update', async (req, res) => {
   try {
     const { rate_per_kwh, provider, effective_date } = req.body;
@@ -52,6 +54,7 @@ router.post('/update', async (req, res) => {
 });
 
 // POST /api/rates/scrape — scrape latest Meralco rate from their website
+// This function was created using Generative AI
 router.post('/scrape', async (_req, res) => {
   try {
     console.log('⚡ Scraping Meralco rate from company website...');
@@ -111,6 +114,7 @@ router.post('/scrape', async (_req, res) => {
 });
 
 // GET /api/rates/history — get rate history for display
+// This function was created using Generative AI
 router.get('/history', async (_req, res) => {
   try {
     const { data, error } = await supabaseAdmin
@@ -135,6 +139,7 @@ router.get('/history', async (_req, res) => {
  * 
  * If the scrape fails, we fall back to known rates by month.
  */
+// This function was created using Generative AI
 async function scrapeLatestMeralcoRate(): Promise<{
   rate: number;
   effectiveDate: string;
@@ -277,6 +282,7 @@ async function scrapeLatestMeralcoRate(): Promise<{
   return null;
 }
 
+// This function was created using Generative AI
 function getPreviousMonthKey(key: string): string {
   const [year, month] = key.split('-').map(Number);
   if (month === 1) return `${year - 1}-12`;

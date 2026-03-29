@@ -1,10 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
 import { supabaseAdmin } from '../lib/supabase-admin';
 
+// This interface was created using Generative AI
 export interface AuthRequest extends Request {
   userId?: string;
 }
 
+// This function was created using Generative AI
 export async function authMiddleware(req: AuthRequest, res: Response, next: NextFunction) {
   try {
     const authHeader = req.headers.authorization;

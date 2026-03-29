@@ -3,7 +3,7 @@ import { supabaseAdmin } from '../lib/supabase-admin';
 import * as gemini from '../lib/gemini';
 import { predictMonthlyBill } from '../lib/ml-predictor';
 import type { AuthRequest } from '../middleware/auth';
-import { ConsumptionEngine } from '../lib/consumptionEngine';
+import { ConsumptionEngine } from '../lib/ConsumptionEngine';
 
 const router = Router();
 
@@ -12,6 +12,7 @@ const router = Router();
 // ============================================================
 
 // POST /api/ai/generate-insights
+// This function was created using Generative AI
 router.post('/generate-insights', async (req: AuthRequest, res) => {
   try {
     const userId = req.userId || req.body.userId;
@@ -77,6 +78,7 @@ router.post('/generate-insights', async (req: AuthRequest, res) => {
 });
 
 // POST /api/ai/chat
+// This function was created using Generative AI
 router.post('/chat', async (req: AuthRequest, res) => {
   try {
     const userId = req.userId || req.body.userId;
@@ -128,6 +130,7 @@ router.post('/chat', async (req: AuthRequest, res) => {
 // ============================================================
 
 // GET /api/ai/enhanced-insights — full monthly estimate + logic for toggles
+// This function was created using Generative AI
 router.get('/enhanced-insights', async (req: AuthRequest, res) => {
   try {
     const userId = (req.userId || req.query.userId) as string;
@@ -266,6 +269,7 @@ router.get('/enhanced-insights', async (req: AuthRequest, res) => {
 });
 
 // POST /api/ai/submit-bill — handles calibration logic
+// This function was created using Generative AI
 router.post('/submit-bill', async (req: AuthRequest, res) => {
   try {
     const userId = req.userId || req.body.userId;
@@ -321,6 +325,7 @@ router.post('/submit-bill', async (req: AuthRequest, res) => {
 });
 
 // GET /api/ai/bill-accuracy
+// This function was created using Generative AI
 router.get('/bill-accuracy', async (req: AuthRequest, res) => {
   try {
     const userId = (req.userId || req.query.userId) as string;

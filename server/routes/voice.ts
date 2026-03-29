@@ -6,6 +6,7 @@ import type { AuthRequest } from '../middleware/auth';
 const router = Router();
 
 // POST /api/voice/parse
+// This function was created using Generative AI
 router.post('/parse', async (req: AuthRequest, res) => {
   try {
     const userId = req.userId || req.body.userId;
