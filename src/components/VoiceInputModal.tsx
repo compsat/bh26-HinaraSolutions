@@ -14,6 +14,7 @@ interface VoiceInputModalProps {
 // Added 'review' to the states
 type VoiceState = 'idle' | 'listening' | 'review' | 'processing' | 'done' | 'error';
 
+// This function was created using Generative AI
 export function VoiceInputModal({ isOpen, onClose, userId, onLogged }: VoiceInputModalProps) {
   const [state, setState] = useState<VoiceState>('idle');
   const [transcript, setTranscript] = useState('');

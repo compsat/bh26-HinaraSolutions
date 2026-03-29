@@ -20,6 +20,7 @@ const ICON_MAP: Record<string, any> = {
   flat_iron: Zap, water_dispenser: Zap, router: Settings2, other: Zap,
 };
 
+// This function was created using Generative AI
 export function AppliancesScreen() {
   const [userId, setUserId] = useState<string>();
   const [showAddModal, setShowAddModal] = useState(false);
@@ -160,6 +161,7 @@ export function AppliancesScreen() {
   );
 }
 
+// This function was created using Generative AI
 function ApplianceCard({ icon: Icon, name, status, value, unit, cost, active, chart, onToggle, onDelete }: any) {
   return (
     <motion.div whileHover={{ scale: 1.01 }}
@@ -201,6 +203,7 @@ function ApplianceCard({ icon: Icon, name, status, value, unit, cost, active, ch
   );
 }
 
+// This function was created using Generative AI
 function OptimizationItem({ icon: Icon, title, description, action, color = 'primary' }: any) {
   return (
     <div className={`bg-surface-container-lowest p-5 rounded-2xl shadow-sm border-l-4 ${color === 'primary' ? 'border-primary' : 'border-on-surface-variant'}`}>
@@ -216,6 +219,7 @@ function OptimizationItem({ icon: Icon, title, description, action, color = 'pri
   );
 }
 
+// This function was created using Generative AI
 function AddApplianceModal({ onClose, onAdd }: { onClose: () => void; onAdd: (data: any) => Promise<void> }) {
   const [type, setType] = useState<ApplianceType>('ac');
   const [customName, setCustomName] = useState('');

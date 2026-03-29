@@ -28,6 +28,7 @@ const BADGE_INFO: Record<BadgeType, { icon: any; label: string }> = {
 };
 const PIE_COLORS = ['#705d00', '#ffd700', '#4d4732', '#d0c6ab', '#9a8c5c'];
 
+// This function was created using Generative AI
 export function AIInsightsScreen() {
   const [userId, setUserId] = useState<string>();
   const [insights, setInsights] = useState<AiInsight[]>([]);
@@ -495,6 +496,7 @@ export function AIInsightsScreen() {
 }
 
 // ── Bill Input Modal ──
+// This function was created using Generative AI
 function BillInputModal({ userId, onClose, onSubmitted }: { userId: string; onClose: () => void; onSubmitted: () => void }) {
   const now = new Date();
   const [billingMonth, setBillingMonth] = useState(`${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`);
@@ -593,6 +595,7 @@ function BillInputModal({ userId, onClose, onSubmitted }: { userId: string; onCl
   );
 }
 
+// This function was created using Generative AI
 function StatCard({ icon: Icon, label, value, sub, highlight }: any) {
   return (
     <div className={`rounded-2xl p-5 shadow-sm border ${highlight ? 'bg-amber-50 border-amber-200' : 'bg-surface-container-lowest border-outline-variant/10'}`}>
@@ -606,6 +609,7 @@ function StatCard({ icon: Icon, label, value, sub, highlight }: any) {
   );
 }
 
+// This function was created using Generative AI
 function SuggestionCard({ icon: Icon, title, description }: any) {
   return (
     <motion.div whileHover={{ scale: 1.01 }}

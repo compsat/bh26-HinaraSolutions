@@ -6,6 +6,7 @@ interface LandingScreenProps {
   onGetStarted: () => void;
 }
 
+// This function was created using Generative AI
 export function LandingScreen({ onGetStarted }: LandingScreenProps) {
   return (
     <div className="min-h-screen bg-surface selection:bg-primary/30 selection:text-primary">

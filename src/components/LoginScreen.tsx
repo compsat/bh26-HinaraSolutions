@@ -24,6 +24,7 @@ const DEFAULT_APPLIANCES: Appliance[] = [
   { id: 'computer', name: 'Computer/Laptop', quantity: 1, icon: '💻' },
 ];
 
+// This function was created using Generative AI
 export function LoginScreen({ onBack }: LoginScreenProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

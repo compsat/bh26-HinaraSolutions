@@ -17,6 +17,7 @@ const DEVICE_ICONS: Record<string, any> = {
   electric_fan: Wind, tv: Zap, computer: Zap, washing_machine: Zap,
 };
 
+// This function was created using Generative AI
 export function SettingsScreen() {
   const [userId, setUserId] = useState<string>();
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -222,6 +223,7 @@ export function SettingsScreen() {
   );
 }
 
+// This function was created using Generative AI
 function InputGroup({ label, value, type = "text", onChange, disabled }: {
   label: string; value: string; type?: string; onChange?: (v: string) => void; disabled?: boolean;
 }) {
@@ -234,6 +236,7 @@ function InputGroup({ label, value, type = "text", onChange, disabled }: {
   );
 }
 
+// This function was created using Generative AI
 function DeviceItem({ icon: Icon, name, details }: any) {
   return (
     <div className="flex items-center justify-between p-4 rounded-2xl bg-surface-container-low group hover:bg-surface-container-lowest transition-all hover:ring-1 hover:ring-primary-container/30">
@@ -248,6 +251,7 @@ function DeviceItem({ icon: Icon, name, details }: any) {
   );
 }
 
+// This function was created using Generative AI
 function ToggleItem({ label, description, checked, onChange }: {
   label: string; description: string; checked: boolean; onChange: (v: boolean) => void;
 }) {
@@ -265,6 +269,7 @@ function ToggleItem({ label, description, checked, onChange }: {
   );
 }
 
+// This function was created using Generative AI
 function SecurityButton({ icon: Icon, label, subLabel, subLabelColor, onClick }: any) {
   return (
     <button onClick={onClick}

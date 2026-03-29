@@ -8,6 +8,7 @@ import { supabase } from '@/src/lib/supabase';
 import * as api from '@/src/lib/api';
 import type { LeaderboardEntry, Challenge } from '@/src/lib/types';
 
+// This function was created using Generative AI
 export function CommunityScreen() {
   const [userId, setUserId] = useState<string>();
   const [userName, setUserName] = useState('You');
@@ -230,6 +231,7 @@ export function CommunityScreen() {
   );
 }
 
+// This function was created using Generative AI
 function ActivityItem({ name, action, time, seed }: any) {
   return (
       <div className="flex gap-4 items-start">
@@ -242,6 +244,7 @@ function ActivityItem({ name, action, time, seed }: any) {
   );
 }
 
+// This function was created using Generative AI
 function LeaderboardItem({ rank, name, value, progress, seed, isTop }: any) {
   return (
       <div className="flex items-center gap-4">

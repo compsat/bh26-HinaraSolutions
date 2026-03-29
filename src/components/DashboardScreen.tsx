@@ -19,6 +19,7 @@ import { useAppliances } from '@/src/hooks/useAppliances';
 import * as api from '@/src/lib/api';
 import { formatPeso } from '@/src/lib/energy-calculator';
 
+// This function was created using Generative AI
 export function DashboardScreen() {
   const [userId, setUserId] = useState<string | undefined>();
   const [selectedApplianceId, setSelectedApplianceId] = useState('');

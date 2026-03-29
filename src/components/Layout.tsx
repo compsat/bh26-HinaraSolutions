@@ -16,6 +16,7 @@ interface SidebarProps {
   setActiveTab: (tab: Tab) => void;
 }
 
+// This function was created using Generative AI
 export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
   const [showVoice, setShowVoice] = useState(false);
   const [userId, setUserId] = useState<string>('');
@@ -107,6 +108,7 @@ export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
   );
 }
 
+// This function was created using Generative AI
 export function Header({ title }: { title: string }) {
   const [unreadCount, setUnreadCount] = useState(0);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);

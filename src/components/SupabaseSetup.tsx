@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Database, Key, Save, AlertCircle } from 'lucide-react';
 import { updateSupabaseConfig, supabaseUrl, supabaseAnonKey } from '../lib/supabase';
 
+// This function was created using Generative AI
 export function SupabaseSetup() {
   const [url, setUrl] = useState(supabaseUrl || '');
   const [key, setKey] = useState(supabaseAnonKey || '');
