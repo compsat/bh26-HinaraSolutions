@@ -18,7 +18,7 @@ import { DEFAULT_RATE_PER_KWH } from './constants';
 // ============================================================
 // PROFILES
 // ============================================================
-
+// This function was created using Generative AI
 export async function getProfile(userId: string): Promise<Profile | null> {
   const { data, error } = await supabase
     .from('profiles')
@@ -31,7 +31,7 @@ export async function getProfile(userId: string): Promise<Profile | null> {
   }
   return data as Profile;
 }
-
+// This function was created using Generative AI
 export async function updateProfile(userId: string, updates: Partial<Profile>): Promise<Profile | null> {
   const { data, error } = await supabase
     .from('profiles')
@@ -46,7 +46,7 @@ export async function updateProfile(userId: string, updates: Partial<Profile>): 
 // ============================================================
 // APPLIANCES
 // ============================================================
-
+// This function was created using Generative AI
 export async function getUserAppliances(userId: string): Promise<Appliance[]> {
   const { data, error } = await supabase
     .from('appliances')
@@ -56,7 +56,7 @@ export async function getUserAppliances(userId: string): Promise<Appliance[]> {
   if (error) throw new Error(error.message);
   return (data || []) as Appliance[];
 }
-
+// This function was created using Generative AI
 export async function addAppliance(userId: string, appliance: NewAppliance): Promise<Appliance> {
   const { data, error } = await supabase
     .from('appliances')
@@ -66,7 +66,7 @@ export async function addAppliance(userId: string, appliance: NewAppliance): Pro
   if (error) throw new Error(error.message);
   return data as Appliance;
 }
-
+// This function was created using Generative AI
 export async function updateAppliance(id: string, updates: Partial<Appliance>): Promise<Appliance> {
   const { data, error } = await supabase
     .from('appliances')
@@ -77,7 +77,7 @@ export async function updateAppliance(id: string, updates: Partial<Appliance>): 
   if (error) throw new Error(error.message);
   return data as Appliance;
 }
-
+// This function was created using Generative AI
 export async function deleteAppliance(id: string): Promise<void> {
   const { error } = await supabase
     .from('appliances')
@@ -89,7 +89,7 @@ export async function deleteAppliance(id: string): Promise<void> {
 // ============================================================
 // USAGE LOGS
 // ============================================================
-
+// This function was created using Generative AI
 export async function logUsage(log: NewUsageLog): Promise<UsageLog> {
   const { data, error } = await supabase
     .from('usage_logs')
@@ -108,7 +108,7 @@ export async function logUsage(log: NewUsageLog): Promise<UsageLog> {
   if (error) throw new Error(error.message);
   return data as UsageLog;
 }
-
+// This function was created using Generative AI
 export async function getUserUsageLogs(
   userId: string,
   startDate: Date,
@@ -124,7 +124,7 @@ export async function getUserUsageLogs(
   if (error) throw new Error(error.message);
   return (data || []) as UsageLog[];
 }
-
+// This function was created using Generative AI
 export async function getTodaysUsage(userId: string): Promise<UsageLog[]> {
   const today = new Date().toISOString().split('T')[0];
   const { data, error } = await supabase
@@ -139,7 +139,7 @@ export async function getTodaysUsage(userId: string): Promise<UsageLog[]> {
 // ============================================================
 // ENERGY RATES
 // ============================================================
-
+// This function was created using Generative AI
 export async function getCurrentRate(): Promise<number> {
   const { data, error } = await supabase
     .from('energy_rates')
@@ -154,7 +154,7 @@ export async function getCurrentRate(): Promise<number> {
 // ============================================================
 // DASHBOARD AGGREGATES
 // ============================================================
-
+// This function was created using Generative AI
 export async function getDashboardData(userId: string): Promise<DashboardData> {
   // Get profile for budget
   const profile = await getProfile(userId);
@@ -199,7 +199,7 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
     monthlyBudget: budget,
   };
 }
-
+// This function was created using Generative AI
 export async function getWeeklyData(userId: string): Promise<WeeklyDataPoint[]> {
   const today = new Date();
   const startOfWeek = new Date(today);
@@ -229,7 +229,7 @@ export async function getWeeklyData(userId: string): Promise<WeeklyDataPoint[]> 
 // ============================================================
 // AI INSIGHTS
 // ============================================================
-
+// This function was created using Generative AI
 export async function getUserInsights(userId: string): Promise<AiInsight[]> {
   const { data, error } = await supabase
     .from('ai_insights')
@@ -240,7 +240,7 @@ export async function getUserInsights(userId: string): Promise<AiInsight[]> {
   if (error) throw new Error(error.message);
   return (data || []) as AiInsight[];
 }
-
+// This function was created using Generative AI
 export async function getUnreadInsightCount(userId: string): Promise<number> {
   const { count, error } = await supabase
     .from('ai_insights')
@@ -250,7 +250,7 @@ export async function getUnreadInsightCount(userId: string): Promise<number> {
   if (error) return 0;
   return count || 0;
 }
-
+// This function was created using Generative AI
 export async function markInsightRead(insightId: string): Promise<void> {
   const { error } = await supabase
     .from('ai_insights')
@@ -262,7 +262,7 @@ export async function markInsightRead(insightId: string): Promise<void> {
 // ============================================================
 // ACHIEVEMENTS
 // ============================================================
-
+// This function was created using Generative AI
 export async function getUserAchievements(userId: string): Promise<Achievement[]> {
   const { data, error } = await supabase
     .from('achievements')
@@ -275,7 +275,7 @@ export async function getUserAchievements(userId: string): Promise<Achievement[]
 // ============================================================
 // COMMUNITY
 // ============================================================
-
+// This function was created using Generative AI
 export async function getLeaderboard(limit: number = 10, location: string = '') {
   // If they are "Metro Manila", we pass null to show everyone. Otherwise, filter by their city.
   const filterLocation = location === 'Metro Manila' ? null : location;
@@ -291,7 +291,7 @@ export async function getLeaderboard(limit: number = 10, location: string = '') 
   }
   return data;
 }
-
+// This function was created using Generative AI
 export async function getTeams(): Promise<CommunityTeam[]> {
   const { data, error } = await supabase
     .from('community_teams')
@@ -303,14 +303,14 @@ export async function getTeams(): Promise<CommunityTeam[]> {
     member_count: t.team_members?.[0]?.count || 0,
   })) as CommunityTeam[];
 }
-
+// This function was created using Generative AI
 export async function joinTeam(userId: string, teamId: string): Promise<void> {
   const { error } = await supabase
     .from('team_members')
     .upsert({ team_id: teamId, user_id: userId });
   if (error) throw new Error(error.message);
 }
-
+// This function was created using Generative AI
 export async function leaveTeam(userId: string, teamId: string): Promise<void> {
   const { error } = await supabase
     .from('team_members')
@@ -318,7 +318,7 @@ export async function leaveTeam(userId: string, teamId: string): Promise<void> {
     .match({ team_id: teamId, user_id: userId });
   if (error) throw new Error(error.message);
 }
-
+// This function was created using Generative AI
 export async function getUserTeams(userId: string): Promise<CommunityTeam[]> {
   const { data, error } = await supabase
     .from('team_members')
@@ -327,7 +327,7 @@ export async function getUserTeams(userId: string): Promise<CommunityTeam[]> {
   if (error) return [];
   return (data || []).map((tm: any) => tm.community_teams).filter(Boolean) as CommunityTeam[];
 }
-
+// This function was created using Generative AI
 export async function getActiveChallenges(location: string = '') {
   const { data, error } = await supabase
       .from('challenges')
@@ -358,7 +358,7 @@ export async function getActiveChallenges(location: string = '') {
 
   return data;
 }
-
+// This function was created using Generative AI
 export async function getRecentActivity(): Promise<any[]> {
   const { data, error } = await supabase
     .from('achievements')
@@ -372,7 +372,7 @@ export async function getRecentActivity(): Promise<any[]> {
 // ============================================================
 // SERVER API HELPERS (for Express backend)
 // ============================================================
-
+// This function was created using Generative AI
 export async function generateInsights(userId: string): Promise<AiInsight[]> {
   try {
     const res = await fetch('/api/ai/generate-insights', {
@@ -387,7 +387,7 @@ export async function generateInsights(userId: string): Promise<AiInsight[]> {
     return [];
   }
 }
-
+// This function was created using Generative AI
 export async function chatWithAI(userId: string, message: string, history: ChatMessage[] = []): Promise<string> {
   try {
     const res = await fetch('/api/ai/chat', {
@@ -403,7 +403,7 @@ export async function chatWithAI(userId: string, message: string, history: ChatM
     return 'Sorry, I could not process your request right now. Please try again! ⚡';
   }
 }
-
+// This function was created using Generative AI
 export async function parseVoiceTranscript(userId: string, transcript: string): Promise<VoiceParseResult> {
   try {
     const res = await fetch('/api/voice/parse', {
@@ -418,7 +418,7 @@ export async function parseVoiceTranscript(userId: string, transcript: string): 
     return { parsed_entries: [], confirmation_text: 'Sorry, could not understand that. Please try again.' };
   }
 }
-
+// This function was created using Generative AI
 export async function getPrediction(userId: string): Promise<PredictionResult | null> {
   try {
     const res = await fetch(`/api/ai/predict?userId=${userId}`);
@@ -429,7 +429,7 @@ export async function getPrediction(userId: string): Promise<PredictionResult | 
     return null;
   }
 }
-
+// This function was created using Generative AI
 export async function getEnhancedInsights(userId: string, isPreview: boolean = false): Promise<any> {
   try {
     // We add the preview parameter to the URL query string
@@ -445,7 +445,7 @@ export async function getEnhancedInsights(userId: string, isPreview: boolean = f
 // ============================================================
 // MERALCO BILL INPUT & ACCURACY
 // ============================================================
-
+// This function was created using Generative AI
 export async function submitMeralcoBill(
   userId: string,
   billingMonth: string,
@@ -465,7 +465,7 @@ export async function submitMeralcoBill(
     return null;
   }
 }
-
+// This function was created using Generative AI
 export async function getBillHistory(userId: string): Promise<any[]> {
   const { data, error } = await supabase
     .from('meralco_bills')
@@ -479,7 +479,7 @@ export async function getBillHistory(userId: string): Promise<any[]> {
   }
   return data || [];
 }
-
+// This function was created using Generative AI
 export async function getBillAccuracy(userId: string): Promise<any> {
   try {
     const res = await fetch(`/api/ai/bill-accuracy?userId=${userId}`);
@@ -490,7 +490,7 @@ export async function getBillAccuracy(userId: string): Promise<any> {
     return null;
   }
 }
-
+// This function was created using Generative AI
 export async function getChallengeStats(challengeId: string) {
   const { data, error } = await supabase
       .rpc('get_team_challenge_stats', { p_challenge_id: challengeId });
@@ -501,7 +501,7 @@ export async function getChallengeStats(challengeId: string) {
   }
   return data;
 }
-
+// This function was created using Generative AI
 // Fetch the average savings percentage ranked by region
 export async function getRegionalRankings() {
   const { data, error } = await supabase.rpc('get_regional_rankings');

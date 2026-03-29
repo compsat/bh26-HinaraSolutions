@@ -3,6 +3,7 @@ import { supabase } from '@/src/lib/supabase';
 import * as api from '@/src/lib/api';
 import type { DashboardData, WeeklyDataPoint, UsageLog, AiInsight } from '@/src/lib/types';
 
+// This function was created using Generative AI
 export function useDashboard(userId: string | undefined) {
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
   const [weeklyData, setWeeklyData] = useState<WeeklyDataPoint[]>([]);

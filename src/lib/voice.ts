@@ -5,6 +5,7 @@
 
 let recognition: any = null;
 
+// This function was created using Generative AI
 export function isSupported(): boolean {
   return !!(
     (window as any).SpeechRecognition ||
@@ -12,6 +13,7 @@ export function isSupported(): boolean {
   );
 }
 
+// This function was created using Generative AI
 export function startListening(
   onTranscript: (text: string, isFinal: boolean) => void,
   onEnd: () => void,
@@ -67,6 +69,7 @@ export function startListening(
   recognition.start();
 }
 
+// This function was created using Generative AI
 export function stopListening(): void {
   if (recognition) {
     recognition.stop();

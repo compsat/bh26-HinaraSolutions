@@ -4,6 +4,7 @@ import * as api from '@/src/lib/api';
 import type { Profile } from '@/src/lib/types';
 import type { Session, User } from '@supabase/supabase-js';
 
+// This function was created using Generative AI
 export function useAuth() {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
