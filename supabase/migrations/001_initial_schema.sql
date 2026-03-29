@@ -324,7 +324,7 @@ BEGIN
   v_days_in_month := EXTRACT(DAY FROM v_month_end);
   v_days_elapsed := GREATEST(EXTRACT(DAY FROM LEAST(CURRENT_DATE, v_month_end)) - EXTRACT(DAY FROM v_month_start) + 1, 1);
 
-  SELECT COALESCE(er.rate_per_kwh, 11.8569) INTO v_rate
+  SELECT COALESCE(er.rate_per_kwh, 13.8161) INTO v_rate
   FROM energy_rates er ORDER BY er.effective_date DESC LIMIT 1;
 
   SELECT COALESCE(p.monthly_budget, 4000) INTO v_budget
@@ -377,7 +377,7 @@ BEGIN
       p.avatar_url,
       CASE
         WHEN p.monthly_budget > 0 THEN
-          ROUND(GREATEST(0, (1 - (m.total_kwh * (SELECT COALESCE(er.rate_per_kwh, 11.8569) FROM energy_rates er ORDER BY er.effective_date DESC LIMIT 1)) / p.monthly_budget)) * 100, 1)
+          ROUND(GREATEST(0, (1 - (m.total_kwh * (SELECT COALESCE(er.rate_per_kwh, 13.8161) FROM energy_rates er ORDER BY er.effective_date DESC LIMIT 1)) / p.monthly_budget)) * 100, 1)
         ELSE 0
       END AS savings_pct
     FROM monthly m
@@ -447,7 +447,7 @@ CREATE TRIGGER trg_appliances_updated_at BEFORE UPDATE ON appliances FOR EACH RO
 
 -- Current Meralco rate
 INSERT INTO energy_rates (provider, rate_per_kwh, effective_date)
-VALUES ('Meralco', 11.8569, '2025-01-01');
+VALUES ('Meralco', 13.8161, '2025-01-01');
 
 -- Community teams
 INSERT INTO community_teams (name, region) VALUES

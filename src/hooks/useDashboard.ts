@@ -3,7 +3,6 @@ import { supabase } from '@/src/lib/supabase';
 import * as api from '@/src/lib/api';
 import type { DashboardData, WeeklyDataPoint, UsageLog, AiInsight } from '@/src/lib/types';
 
-// This function was created using Generative AI
 export function useDashboard(userId: string | undefined) {
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
   const [weeklyData, setWeeklyData] = useState<WeeklyDataPoint[]>([]);
@@ -17,12 +16,28 @@ export function useDashboard(userId: string | undefined) {
     try {
       setLoading(true);
       setError(null);
-      const [dash, weekly, today, ins] = await Promise.all([
+
+      // 1. Add getEnhancedInsights to your Promise.all
+      const [dash, weekly, today, ins, enhanced] = await Promise.all([
         api.getDashboardData(userId),
         api.getWeeklyData(userId),
         api.getTodaysUsage(userId),
         api.getUserInsights(userId),
+        api.getEnhancedInsights(userId, false), // false = Current Month mode
       ]);
+
+      // 2. Override the old Dashboard math with the new AI Engine math
+      if (dash && enhanced?.monthlyEstimate) {
+        dash.projectedBill = enhanced.monthlyEstimate.estimatedBill;
+        dash.burnRate = enhanced.monthlyEstimate.dailyAvgCost;
+
+        // 3. Recalculate the budget status so the Gauge colors match the new estimate
+        if (dash.monthlyBudget > 0) {
+          const ratio = dash.projectedBill / dash.monthlyBudget;
+          dash.budgetStatus = ratio >= 1 ? 'over' : ratio >= 0.85 ? 'warning' : 'under';
+        }
+      }
+
       setDashboardData(dash);
       setWeeklyData(weekly);
       setTodaysUsage(today);
@@ -39,26 +54,24 @@ export function useDashboard(userId: string | undefined) {
     refresh();
   }, [refresh]);
 
-  // Realtime subscription for usage_logs changes
   useEffect(() => {
     if (!userId) return;
 
     const channel = supabase
-      .channel('usage_logs_changes')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'usage_logs',
-          filter: `user_id=eq.${userId}`,
-        },
-        () => {
-          // Refresh dashboard when usage logs change
-          refresh();
-        }
-      )
-      .subscribe();
+        .channel('usage_logs_changes')
+        .on(
+            'postgres_changes',
+            {
+              event: '*',
+              schema: 'public',
+              table: 'usage_logs',
+              filter: `user_id=eq.${userId}`,
+            },
+            () => {
+              refresh();
+            }
+        )
+        .subscribe();
 
     return () => {
       supabase.removeChannel(channel);
