@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import * as api from '@/src/lib/api';
 import type { Appliance, NewAppliance } from '@/src/lib/types';
 
+// This function was created using Generative AI
 export function useAppliances(userId: string | undefined) {
   const [appliances, setAppliances] = useState<Appliance[]>([]);
   const [loading, setLoading] = useState(true);

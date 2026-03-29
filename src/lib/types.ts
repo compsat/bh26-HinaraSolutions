@@ -1,7 +1,7 @@
 // ============================================================
 // WattZup — TypeScript Type Definitions
 // ============================================================
-
+// This interface was created using Generative AI
 export interface Profile {
   id: string;
   full_name: string | null;
@@ -18,7 +18,7 @@ export interface Profile {
   created_at: string;
   updated_at: string;
 }
-
+// This interface was created using Generative AI
 export interface Appliance {
   id: string;
   user_id: string;
@@ -32,13 +32,13 @@ export interface Appliance {
   created_at: string;
   updated_at: string;
 }
-
+// This type was created using Generative AI
 export type ApplianceType =
   | 'ac' | 'refrigerator' | 'electric_fan' | 'washing_machine'
   | 'rice_cooker' | 'microwave' | 'tv' | 'computer'
   | 'water_heater' | 'lighting' | 'flat_iron' | 'water_dispenser'
   | 'router' | 'other';
-
+// This interface was created using Generative AI
 export interface NewAppliance {
   appliance_type: ApplianceType;
   custom_name?: string;
@@ -47,7 +47,7 @@ export interface NewAppliance {
   is_always_on?: boolean;
   default_daily_hours?: number;
 }
-
+// This interface was created using Generative AI
 export interface UsageLog {
   id: string;
   user_id: string;
@@ -58,7 +58,7 @@ export interface UsageLog {
   source: 'manual' | 'voice' | 'auto';
   created_at: string;
 }
-
+// This interface was created using Generative AI
 export interface NewUsageLog {
   user_id: string;
   appliance_id: string;
@@ -66,7 +66,7 @@ export interface NewUsageLog {
   hours_used: number;
   source?: 'manual' | 'voice' | 'auto';
 }
-
+// This interface was created using Generative AI
 export interface EnergyRate {
   id: string;
   provider: string;
@@ -74,7 +74,7 @@ export interface EnergyRate {
   effective_date: string;
   created_at: string;
 }
-
+// This interface was created using Generative AI
 export interface AiInsight {
   id: string;
   user_id: string;
@@ -86,19 +86,19 @@ export interface AiInsight {
   expires_at: string;
   created_at: string;
 }
-
+// This interface was created using Generative AI
 export interface Achievement {
   id: string;
   user_id: string;
   badge_type: BadgeType;
   earned_at: string;
 }
-
+// This interface was created using Generative AI
 export type BadgeType =
   | 'first_week_under_budget' | 'seven_day_streak' | 'thirty_day_streak'
   | 'off_peak_hero' | 'carbon_neutral' | 'master_saver'
   | '500kwh_saved' | 'community_champion';
-
+// This interface was created using Generative AI
 export interface CommunityTeam {
   id: string;
   name: string;
@@ -106,13 +106,13 @@ export interface CommunityTeam {
   created_at: string;
   member_count?: number;
 }
-
+// This interface was created using Generative AI
 export interface TeamMember {
   team_id: string;
   user_id: string;
   joined_at: string;
 }
-
+// This interface was created using Generative AI
 export interface Challenge {
   id: string;
   title: string;
@@ -125,7 +125,7 @@ export interface Challenge {
   is_active: boolean;
   created_at: string;
 }
-
+// This interface was created using Generative AI
 export interface LeaderboardEntry {
   user_id: string;
   full_name: string;
@@ -133,7 +133,7 @@ export interface LeaderboardEntry {
   savings_percent: number;
   total_kwh: number;
 }
-
+// This interface was created using Generative AI
 export interface DashboardData {
   totalKwh: number;
   totalCost: number;
@@ -146,13 +146,13 @@ export interface DashboardData {
   percentUsed: number;
   monthlyBudget: number;
 }
-
+// This interface was created using Generative AI
 export interface WeeklyDataPoint {
   name: string;
   value: number;
   date: string;
 }
-
+// This interface was created using Generative AI
 export interface MeralcoBill {
   id: string;
   user_id: string;
@@ -166,7 +166,7 @@ export interface MeralcoBill {
   amount_difference: number;
   created_at: string;
 }
-
+// This interface was created using Generative AI
 export interface BillAccuracy {
   currentMonth: {
     estimated: number;
@@ -177,12 +177,12 @@ export interface BillAccuracy {
   avgAccuracy: number;
   trend: 'improving' | 'declining' | 'stable' | 'no_data';
 }
-
+// This interface was created using Generative AI
 export interface ChatMessage {
   role: 'user' | 'assistant';
   content: string;
 }
-
+// This interface was created using Generative AI
 export interface ParsedVoiceEntry {
   appliance_type: ApplianceType;
   appliance_id?: string;
@@ -190,19 +190,19 @@ export interface ParsedVoiceEntry {
   date: string;
   appliance_name?: string;
 }
-
+// This interface was created using Generative AI
 export interface VoiceParseResult {
   parsed_entries: ParsedVoiceEntry[];
   confirmation_text: string;
 }
-
+// This interface was created using Generative AI
 export interface PredictionResult {
   predictedBill: number;
   confidence: { low: number; high: number };
   adjustmentFactors: { historical: number; weather: number; trend: number };
   dailyForecast: { date: string; predictedKwh: number }[];
 }
-
+// This interface was created using Generative AI
 export interface BillBreakdown {
   generation: number;
   transmission: number;
@@ -213,7 +213,7 @@ export interface BillBreakdown {
   totalBill: number;
   totalKwh: number;
 }
-
+// This interface was created using Generative AI
 export interface TemperatureInsight {
   currentTemp: number;
   avgTemp: number;
@@ -222,7 +222,7 @@ export interface TemperatureInsight {
   acExtraCost: number;
   recommendation: string;
 }
-
+// This interface was created using Generative AI
 export interface MonthlyEstimate {
   estimatedKwh: number;
   estimatedBill: number;
@@ -237,7 +237,7 @@ export interface MonthlyEstimate {
   daysRemaining: number;
   savingsPotential: number;
 }
-
+// This interface was created using Generative AI
 export interface EnhancedInsightsData {
   monthlyEstimate: MonthlyEstimate;
   prediction: PredictionResult;
