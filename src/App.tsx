@@ -13,6 +13,7 @@ import { Session } from '@supabase/supabase-js';
 
 type Tab = 'dashboard' | 'appliances' | 'insights' | 'community' | 'settings';
 
+// This function was created using Generative AI
 export default function App() {
   const [activeTab, setActiveTab] = useState<Tab>('dashboard');
   const [session, setSession] = useState<Session | null>(null);

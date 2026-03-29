@@ -20,6 +20,7 @@ export function CommunityScreen() {
   const [userLocation, setUserLocation] = useState('your area');
   const [loading, setLoading] = useState(true);
   const [regionalRankings, setRegionalRankings] = useState<any[]>([]);
+  const [showImpactMap, setShowImpactMap] = useState(false);
 
   // NEW: State to hold the live duel statistics
   const [challengeStats, setChallengeStats] = useState<any[]>([]);
@@ -118,7 +119,8 @@ export function CommunityScreen() {
               </p>
 
               <div className="flex gap-4">
-                <button className="bg-primary text-white px-6 py-3 rounded-full font-semibold hover:opacity-90 transition-opacity">
+                <button onClick={() => setShowImpactMap(true)}
+                className="bg-primary text-white px-6 py-3 rounded-full font-semibold hover:opacity-90 transition-opacity">
                   View Impact Map
                 </button>
                 <button
@@ -263,6 +265,50 @@ export function CommunityScreen() {
         <button className="fixed bottom-12 right-12 w-16 h-16 bg-primary shadow-2xl rounded-full text-white flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-40">
           <Plus className="w-8 h-8" />
         </button>
+
+
+   
+      {showImpactMap && (
+        <motion.div 
+          initial={{ opacity: 0 }} 
+          animate={{ opacity: 1 }} 
+          exit={{ opacity: 0 }}
+          onClick={() => setShowImpactMap(false)}
+          className="fixed inset-0 bg-black/80 backdrop-blur-md z-[100] flex items-center justify-center p-6 cursor-zoom-out"
+        >
+          <motion.div 
+            initial={{ scale: 0.9, y: 20 }} 
+            animate={{ scale: 1, y: 0 }}
+            exit={{ scale: 0.9, y: 20 }}
+            onClick={(e) => e.stopPropagation()}
+            className="relative max-w-5xl w-full bg-surface-container-lowest rounded-[2.5rem] overflow-hidden shadow-2xl cursor-default"
+          >
+            {/* Close Button */}
+            <button 
+              onClick={() => setShowImpactMap(false)}
+              className="absolute top-6 right-6 p-2 bg-black/50 text-white rounded-full hover:bg-black/70 transition-all z-10"
+            >
+              <Plus className="w-6 h-6 rotate-45" /> {/* Using Plus rotated for an X */}
+            </button>
+
+            {/* The Photo */}
+            <div className="flex flex-col">
+              <img 
+                src="/impactMap.png" 
+                alt="Community Energy Impact Map" 
+                className="w-full h-auto object-contain max-h-[75vh]"
+              />
+              <div className="p-8 border-t border-outline-variant/10">
+                <h3 className="font-headline font-bold text-2xl mb-2">Regional Activity Heatmap</h3>
+                <p className="text-on-surface-variant">
+                  This map shows the green contribution of WattZap users in <span className="text-primary font-bold">{userLocation}</span>. 
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+
       </main>
   );
 }
