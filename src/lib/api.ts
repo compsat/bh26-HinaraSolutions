@@ -430,9 +430,10 @@ export async function getPrediction(userId: string): Promise<PredictionResult | 
   }
 }
 
-export async function getEnhancedInsights(userId: string): Promise<any> {
+export async function getEnhancedInsights(userId: string, isPreview: boolean = false): Promise<any> {
   try {
-    const res = await fetch(`/api/ai/enhanced-insights?userId=${userId}`);
+    // We add the preview parameter to the URL query string
+    const res = await fetch(`http://localhost:3001/api/ai/enhanced-insights?userId=${userId}&preview=${isPreview}`);
     if (!res.ok) throw new Error('Failed to get enhanced insights');
     return await res.json();
   } catch (err) {

@@ -15,6 +15,7 @@ import * as api from '@/src/lib/api';
 import { formatPeso } from '@/src/lib/energy-calculator';
 import type { AiInsight, Achievement, ChatMessage, BadgeType, MonthlyEstimate, MeralcoBill, BillAccuracy } from '@/src/lib/types';
 
+
 const BADGE_INFO: Record<BadgeType, { icon: any; label: string }> = {
   first_week_under_budget: { icon: Trophy, label: 'First Week' },
   seven_day_streak: { icon: Sparkles, label: '7 Day Streak' },
@@ -42,6 +43,7 @@ export function AIInsightsScreen() {
   const [insightsLoading, setInsightsLoading] = useState(false);
   const [loading, setLoading] = useState(true);
   const [dashData, setDashData] = useState<any>(null);
+  const [viewMode, setViewMode] = useState<'current' | 'next'>('current');
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => { if (user) setUserId(user.id); });
@@ -56,7 +58,7 @@ export function AIInsightsScreen() {
         api.getUserAchievements(userId),
         api.getDashboardData(userId),
         api.getWeeklyData(userId),
-        api.getEnhancedInsights(userId),
+        api.getEnhancedInsights(userId, viewMode === 'next'),
         api.getBillAccuracy(userId),
       ]);
       setInsights(ins);
@@ -85,7 +87,7 @@ export function AIInsightsScreen() {
     finally { setLoading(false); }
   };
 
-  useEffect(() => { loadData(); }, [userId]);
+  useEffect(() => { loadData(); }, [userId, viewMode]);
 
   const handleGenerateInsights = async () => {
     if (!userId) return;
@@ -162,7 +164,26 @@ export function AIInsightsScreen() {
   return (
     <div className="p-10 max-w-7xl mx-auto space-y-10">
       {/* Hero: Monthly Estimate */}
+      <div className="flex bg-surface-container-low p-1 rounded-xl w-fit mb-6">
+        <button 
+          onClick={() => setViewMode('current')}
+          className={`px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${
+            viewMode === 'current' ? 'bg-primary text-white shadow-md' : 'text-on-surface-variant'
+          }`}
+        >
+          Current
+        </button>
+        <button 
+          onClick={() => setViewMode('next')}
+          className={`px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${
+            viewMode === 'next' ? 'bg-primary text-white shadow-md' : 'text-on-surface-variant'
+          }`}
+        >
+          Next Month Preview
+        </button>
+      </div>
       <section className="flex flex-col md:flex-row items-end gap-8 relative pb-4">
+        
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="flex-grow pb-4">
           <div className="relative bg-surface-container-lowest p-8 rounded-[2rem] rounded-bl-none shadow-xl border-l-8 border-primary-container max-w-2xl">

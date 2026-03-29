@@ -52,7 +52,7 @@ Return ONLY the JSON array, no other text.`;
 
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
+      model: 'gemini-2.5-flash',
       contents: prompt,
       config: { responseMimeType: 'application/json' },
 
@@ -99,7 +99,7 @@ Keep responses concise (under 300 words). Be warm and helpful.`;
 
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
+      model: 'gemini-2.5-flash',
       contents,
     });
     return response.text || 'Hindi ko ma-process ang request mo ngayon. Try again! ⚡';
@@ -133,7 +133,7 @@ Return ONLY the JSON, no other text.`;
 
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
+      model: 'gemini-2.5-flash',
       contents: prompt,
     });
 
