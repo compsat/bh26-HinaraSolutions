@@ -1,7 +1,9 @@
 import { supabaseAdmin } from './supabase-admin';
 import { getDaysInMonth, getDaysRemainingInMonth } from './energy-calculator';
 
+// This class was created using Generative AI
 export class ConsumptionEngine {
+  // This function was created using Generative AI
   // Multipliers for Philippines context (March-May is Summer)
   private static getMultipliers() {
     const now = new Date();
@@ -16,6 +18,7 @@ export class ConsumptionEngine {
     };
   }
 
+  // This function was created using Generative AI
   static async getCalibrationFactor(userId: string): Promise<number> {
   const { data: lastBill } = await supabaseAdmin
     .from('meralco_bills')
@@ -39,7 +42,7 @@ export class ConsumptionEngine {
 }
 
     // server/lib/ConsumptionEngine.ts
-
+// This function was created using Generative AI
 static async getEnhancedEstimate(userId: string, isPreview: boolean = false) {
   const calibrationFactor = await this.getCalibrationFactor(userId);
   const { data: appliances } = await supabaseAdmin.from('appliances')

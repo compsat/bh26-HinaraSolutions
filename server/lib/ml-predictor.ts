@@ -8,6 +8,7 @@
  * 4. TREND DETECTION: 7-day moving average comparison
  */
 
+// This interface was created using Generative AI
 interface PredictionParams {
   appliances: any[];
   usageLogs: any[];
@@ -17,13 +18,14 @@ interface PredictionParams {
   temperature?: number;
 }
 
+// This interface was created using Generative AI
 interface PredictionResult {
   predictedBill: number;
   confidence: { low: number; high: number };
   adjustmentFactors: { historical: number; weather: number; trend: number };
   dailyForecast: { date: string; predictedKwh: number }[];
 }
-
+// This function was created using Generative AI
 export function predictMonthlyBill(params: PredictionParams): PredictionResult {
   const { appliances, usageLogs, ratePerKwh, currentDayOfMonth, daysInMonth, temperature } = params;
   const daysRemaining = daysInMonth - currentDayOfMonth;

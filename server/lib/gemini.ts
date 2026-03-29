@@ -15,6 +15,7 @@ interface UserEnergyContext {
   billBreakdown?: any;
 }
 
+// This function was created using Generative AI
 export async function generateInsights(context: UserEnergyContext): Promise<any[]> {
   const prompt = `You are an expert Filipino energy advisor for the WattZup app. Analyze this household's energy data and provide actionable insights. Return ONLY a JSON array of 5-7 insights.
 
@@ -70,6 +71,7 @@ Return ONLY the JSON array, no other text.`;
   }
 }
 
+// This function was created using Generative AI
 export async function chatWithAI(
   message: string,
   context: UserEnergyContext,
@@ -109,6 +111,7 @@ Keep responses concise (under 300 words). Be warm and helpful.`;
   }
 }
 
+// This function was created using Generative AI
 export async function parseVoiceInput(
   transcript: string,
   userAppliances: any[]
